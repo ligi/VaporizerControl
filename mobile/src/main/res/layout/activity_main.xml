@@ -1,0 +1,63 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent">
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:tools="http://schemas.android.com/tools"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    tools:context=".MainActivity">
+
+        <TextView
+                tools:text="temp"
+                android:textSize="64sp"
+                android:fontFamily="sans-serif"
+                android:id="@+id/temperature"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        <TextView
+                tools:text="temp"
+                android:textSize="32sp"
+                android:fontFamily="sans-serif"
+                android:layout_toRightOf="@+id/temperature"
+                android:id="@+id/temperatureSetPoint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        <TextView
+                tools:text="batt"
+                android:textSize="32sp"
+                android:fontFamily="sans-serif"
+                android:layout_toRightOf="@id/temperature"
+                android:layout_below="@id/temperatureSetPoint"
+                android:id="@+id/tempBoost"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        <TextView
+                tools:text="batt"
+                android:textSize="32sp"
+                android:fontFamily="sans-serif"
+                android:layout_below="@id/temperature"
+                android:id="@+id/battery"
+                android:drawableLeft="@drawable/ic_action_battery_full"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+
+        <TextView
+                tools:text="100%"
+                android:textSize="32sp"
+                android:fontFamily="sans-serif"
+                android:layout_toRightOf="@id/temperature"
+                android:layout_below="@id/temperature"
+                android:id="@+id/led"
+                android:drawableLeft="@drawable/ic_action_brightness_medium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+    </RelativeLayout>
+</FrameLayout>
