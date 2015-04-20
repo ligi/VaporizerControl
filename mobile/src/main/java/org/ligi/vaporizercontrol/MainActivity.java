@@ -1,6 +1,7 @@
 package org.ligi.vaporizercontrol;
 
 import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCallback;
 import android.bluetooth.BluetoothGattCharacteristic;
@@ -48,7 +49,20 @@ public class MainActivity extends ActionBarActivity {
 
         ButterKnife.inject(this);
 
-        getBluetooth().getRemoteDevice("B4:99:4C:2C:DF:7A").connectGatt(this, true, new BluetoothGattCallback() {
+        getBluetooth().startLeScan( new BluetoothAdapter.LeScanCallback() {
+            @Override
+            public void onLeScan(final BluetoothDevice device, final int rssi, final byte[] scanRecord) {
+                if (device.getName()!=null && device.getName().equals("STORZ&BICKEL")) {
+                    connect(device.getAddress());
+                    getBluetooth().stopLeScan(null);
+                }
+            }
+        });
+
+    }
+
+    private void connect(String addr) {
+        getBluetooth().getRemoteDevice(addr).connectGatt(this, true, new BluetoothGattCallback() {
             @Override
             public void onConnectionStateChange(final BluetoothGatt gatt, final int status, final int newState) {
                 super.onConnectionStateChange(gatt, status, newState);
