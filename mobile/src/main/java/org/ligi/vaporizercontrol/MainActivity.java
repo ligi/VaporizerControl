@@ -9,7 +9,7 @@ import android.bluetooth.BluetoothGattDescriptor;
 import android.bluetooth.BluetoothGattService;
 import android.bluetooth.BluetoothManager;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 import android.widget.Toast;
 import butterknife.ButterKnife;
@@ -17,7 +17,7 @@ import butterknife.InjectView;
 import java.util.UUID;
 
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends AppCompatActivity {
 
     public static final String BATTERY_CHARACTERISTIC_UUID = "00000041-4c45-4b43-4942-265a524f5453";
     public static final String TEMPERATURE_CHARACTERISTIC_UUID = "00000011-4c45-4b43-4942-265a524f5453";
@@ -49,10 +49,10 @@ public class MainActivity extends ActionBarActivity {
 
         ButterKnife.inject(this);
 
-        getBluetooth().startLeScan( new BluetoothAdapter.LeScanCallback() {
+        getBluetooth().startLeScan(new BluetoothAdapter.LeScanCallback() {
             @Override
             public void onLeScan(final BluetoothDevice device, final int rssi, final byte[] scanRecord) {
-                if (device.getName()!=null && device.getName().equals("STORZ&BICKEL")) {
+                if (device.getName() != null && device.getName().equals("STORZ&BICKEL")) {
                     connect(device.getAddress());
                     getBluetooth().stopLeScan(null);
                 }
