@@ -10,6 +10,10 @@
                     tools:context=".MainActivity">
 
         <TextView
+                android:text="intro_text"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+
+        <TextView
                 tools:text="temp"
                 android:textSize="64sp"
                 android:fontFamily="sans-serif"

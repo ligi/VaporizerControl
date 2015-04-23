@@ -24,28 +24,28 @@ public class MainActivity extends AppCompatActivity implements VaporizerData.Vap
     @InjectView(R.id.led)
     TextView led;
 
-    VaporizerCommunicator communicator;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
         ButterKnife.inject(this);
-
-        communicator=new VaporizerCommunicator(this);
     }
 
     @Override
     protected void onPause() {
-        communicator.onPause();
+        getApp().getVaporizerCommunicator().destroy();
         super.onPause();
     }
 
     @Override
     protected void onResume() {
-        communicator.onResume(this);
+        getApp().getVaporizerCommunicator().connectAndRegisterForUpdates(this);
         super.onResume();
+    }
+
+    private App getApp() {
+        return (App)getApplication();
     }
 
     @Override

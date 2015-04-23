@@ -34,35 +34,40 @@ public class VaporizerCommunicator {
 
 
     enum State {
-        STATE_SCANNING,
-        STATE_CONNECTING
+        SCANNING,
+        CONNECTING,
+        CONNECTED,
+        DISCONNECTED
     }
 
-    private State state = State.STATE_SCANNING;
+    private State state = State.DISCONNECTED;
 
     public VaporizerCommunicator(final Context context) {
         this.context = context;
         bt = ((BluetoothManager) context.getSystemService(Activity.BLUETOOTH_SERVICE)).getAdapter();
     }
 
-    public void onPause() {
+    public void destroy() {
         this.updateListener = null;
-        if (state.equals(State.STATE_SCANNING)) {
+        if (state.equals(State.SCANNING)) {
             bt.stopLeScan(null);
         }
 
-        if (gatt != null) {
+        if (gatt != null && state.equals(State.CONNECTED)) {
             gatt.disconnect();
         }
 
+        state = State.DISCONNECTED;
     }
 
-    public void onResume(VaporizerData.VaporizerUpdateListener updateListener) {
+    public void connectAndRegisterForUpdates(VaporizerData.VaporizerUpdateListener updateListener) {
         this.updateListener = updateListener;
-        if (getAutoConnectMAC() != null) {
-            connect(getAutoConnectMAC());
-        } else {
-            startScan();
+        if (state == State.DISCONNECTED) {
+            if (getAutoConnectMAC() != null) {
+                connect(getAutoConnectMAC());
+            } else {
+                startScan();
+            }
         }
     }
 
@@ -80,7 +85,7 @@ public class VaporizerCommunicator {
     }
 
     private void connect(String addr) {
-        state = State.STATE_CONNECTING;
+        state = State.CONNECTING;
         getPrefs().edit().putString("addr", addr).commit();
         bt.getRemoteDevice(addr).connectGatt(context, true, new BluetoothGattCallback() {
             @Override
@@ -88,6 +93,7 @@ public class VaporizerCommunicator {
                 super.onConnectionStateChange(newGatt, status, newState);
                 gatt = newGatt;
                 newGatt.discoverServices();
+                state = State.CONNECTED;
             }
 
             @Override
@@ -106,6 +112,10 @@ public class VaporizerCommunicator {
                 service = characteristic.getService();
 
                 switch (characteristic.getUuid().toString()) {
+
+                    case BATTERY_CHARACTERISTIC_UUID:
+                        readCharacteristic(TEMPERATURE_CHARACTERISTIC_UUID);
+                        break;
 
                     case TEMPERATURE_CHARACTERISTIC_UUID:
                         readCharacteristic(TEMPERATURE_SETPOINT_CHARACTERISTIC_UUID);
@@ -183,10 +193,11 @@ public class VaporizerCommunicator {
     }
 
     private void startScan() {
+        state = State.SCANNING;
         bt.startLeScan(new BluetoothAdapter.LeScanCallback() {
             @Override
             public void onLeScan(final BluetoothDevice device, final int rssi, final byte[] scanRecord) {
-                if (state.equals(State.STATE_SCANNING) && device.getName() != null && device.getName().equals("STORZ&BICKEL")) {
+                if (state.equals(State.SCANNING) && device.getName() != null && device.getName().equals("STORZ&BICKEL")) {
                     bt.stopLeScan(null);
                     connect(device.getAddress());
                 }
