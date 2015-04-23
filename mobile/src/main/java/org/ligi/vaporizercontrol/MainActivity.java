@@ -2,12 +2,17 @@ package org.ligi.vaporizercontrol;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 
 public class MainActivity extends AppCompatActivity implements VaporizerData.VaporizerUpdateListener {
+
+    @InjectView(R.id.intro_text)
+    TextView introText;
 
     @InjectView(R.id.battery)
     TextView battery;
@@ -41,23 +46,26 @@ public class MainActivity extends AppCompatActivity implements VaporizerData.Vap
     @Override
     protected void onResume() {
         getApp().getVaporizerCommunicator().connectAndRegisterForUpdates(this);
+        onUpdate(getApp().getVaporizerCommunicator().getData());
         super.onResume();
     }
 
     private App getApp() {
-        return (App)getApplication();
+        return (App) getApplication();
     }
 
     @Override
     public void onUpdate(final VaporizerData data) {
+        introText.setText(Html.fromHtml(getString(R.string.intro_text)));
+        introText.setMovementMethod(new LinkMovementMethod());
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                battery.setText("" + data.batteryPercentage + "%");
-                temperature.setText("" + data.currentTemperature / 10f + "° / ");
-                temperatureSetPoint.setText("" + data.setTemperature / 10f + "°");
-                tempBoost.setText("+" + data.boostTemperature / 10f + "°");
-                led.setText("" + data.ledPercentage + "%");
+                battery.setText((data.batteryPercentage == null ? "?" : "" + data.batteryPercentage) + "%");
+                temperature.setText((data.currentTemperature == null ? "?" : "" + data.currentTemperature / 10f) + "° / ");
+                temperatureSetPoint.setText((data.setTemperature == null ? "?" : "" + data.setTemperature / 10f) + "°");
+                tempBoost.setText((data.boostTemperature == null ? "?" : "+" + data.boostTemperature / 10f) + "°");
+                led.setText((data.ledPercentage == null ? "?" : "" + data.ledPercentage) + "%");
             }
         });
     }

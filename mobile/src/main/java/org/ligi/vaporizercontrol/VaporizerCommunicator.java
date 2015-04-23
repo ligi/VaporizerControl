@@ -205,4 +205,7 @@ public class VaporizerCommunicator {
         });
     }
 
+    public VaporizerData getData() {
+        return data;
+    }
 }
