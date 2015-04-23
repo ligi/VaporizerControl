@@ -9,6 +9,7 @@ import android.bluetooth.BluetoothGattCharacteristic;
 import android.bluetooth.BluetoothGattDescriptor;
 import android.bluetooth.BluetoothGattService;
 import android.bluetooth.BluetoothManager;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.widget.Toast;
 import java.util.UUID;
@@ -27,7 +28,7 @@ public class VaporizerCommunicator {
     private BluetoothGatt gatt;
     private BluetoothGattService service;
 
-    private final Activity activity;
+    private final Context context;
     private VaporizerData.VaporizerUpdateListener updateListener;
     private VaporizerData data = new VaporizerData();
 
@@ -39,9 +40,9 @@ public class VaporizerCommunicator {
 
     private State state = State.STATE_SCANNING;
 
-    public VaporizerCommunicator(final Activity activity) {
-        this.activity = activity;
-        bt = ((BluetoothManager) activity.getSystemService(Activity.BLUETOOTH_SERVICE)).getAdapter();
+    public VaporizerCommunicator(final Context context) {
+        this.context = context;
+        bt = ((BluetoothManager) context.getSystemService(Activity.BLUETOOTH_SERVICE)).getAdapter();
     }
 
     public void onPause() {
@@ -71,7 +72,7 @@ public class VaporizerCommunicator {
     }
 
     private SharedPreferences getPrefs() {
-        return activity.getSharedPreferences("addr", Activity.MODE_PRIVATE);
+        return context.getSharedPreferences("addr", Activity.MODE_PRIVATE);
     }
 
     private void readCharacteristic(final String uuid) {
@@ -81,7 +82,7 @@ public class VaporizerCommunicator {
     private void connect(String addr) {
         state = State.STATE_CONNECTING;
         getPrefs().edit().putString("addr", addr).commit();
-        bt.getRemoteDevice(addr).connectGatt(activity, true, new BluetoothGattCallback() {
+        bt.getRemoteDevice(addr).connectGatt(context, true, new BluetoothGattCallback() {
             @Override
             public void onConnectionStateChange(final BluetoothGatt newGatt, final int status, final int newState) {
                 super.onConnectionStateChange(newGatt, status, newState);
@@ -177,7 +178,7 @@ public class VaporizerCommunicator {
         BluetoothGattDescriptor descriptor = ledChar.getDescriptors().get(0);
         descriptor.setValue(BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE);
         if (!gatt.writeDescriptor(descriptor)) {
-            Toast.makeText(activity, "Could not write descriptor for notification", Toast.LENGTH_LONG).show();
+            Toast.makeText(context, "Could not write descriptor for notification", Toast.LENGTH_LONG).show();
         }
     }
 
