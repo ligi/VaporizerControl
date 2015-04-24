@@ -56,11 +56,13 @@ public class MainActivity extends AppCompatActivity implements VaporizerData.Vap
 
     @Override
     public void onUpdate(final VaporizerData data) {
-        introText.setText(Html.fromHtml(getString(R.string.intro_text)));
-        introText.setMovementMethod(new LinkMovementMethod());
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
+
+                introText.setText(Html.fromHtml(getString(R.string.intro_text)));
+                introText.setMovementMethod(new LinkMovementMethod());
+
                 battery.setText((data.batteryPercentage == null ? "?" : "" + data.batteryPercentage) + "%");
                 temperature.setText((data.currentTemperature == null ? "?" : "" + data.currentTemperature / 10f) + "° / ");
                 temperatureSetPoint.setText((data.setTemperature == null ? "?" : "" + data.setTemperature / 10f) + "°");
