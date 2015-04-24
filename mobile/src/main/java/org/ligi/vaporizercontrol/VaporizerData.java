@@ -17,4 +17,8 @@ public class VaporizerData {
     public interface VaporizerUpdateListener {
         void onUpdate(VaporizerData data);
     }
+
+    public boolean hasData() {
+        return batteryPercentage != null || currentTemperature != null || setTemperature != null || boostTemperature != null || ledPercentage != null;
+    }
 }

@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">Vaporizer Control Crafty</string>
-    <string name="intro_text">This app is to control vaporizers <![CDATA[<a href="http://www.storz-bickel.com/shop_us/en/crafty-portable-app-vaporizer/">like the Crafty</a>]]> Without such a device this app will make not much sense to you.
+    <string name="intro_text">Scanning for a vaporizer. This app is for you to control and monitor vaporizers <![CDATA[<a href="http://www.storz-bickel.com/shop_us/en/crafty-portable-app-vaporizer/">like the Crafty</a>]]> Without such a device this app will make not much sense to you.
     </string>
 </resources>

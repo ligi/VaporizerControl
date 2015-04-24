@@ -4,12 +4,17 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
+import android.view.View;
 import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import static android.view.View.*;
 
 
 public class MainActivity extends AppCompatActivity implements VaporizerData.VaporizerUpdateListener {
+
+    @InjectView(R.id.progress_indicator)
+    View progress_indicator;
 
     @InjectView(R.id.intro_text)
     TextView introText;
@@ -59,9 +64,15 @@ public class MainActivity extends AppCompatActivity implements VaporizerData.Vap
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-
-                introText.setText(Html.fromHtml(getString(R.string.intro_text)));
-                introText.setMovementMethod(new LinkMovementMethod());
+                if (introText.getVisibility() == VISIBLE) {
+                    if (data.hasData()) {
+                        introText.setVisibility(GONE);
+                        progress_indicator.setVisibility(GONE);
+                    } else  {
+                        introText.setText(Html.fromHtml(getString(R.string.intro_text)));
+                        introText.setMovementMethod(new LinkMovementMethod());
+                    }
+                }
 
                 battery.setText((data.batteryPercentage == null ? "?" : "" + data.batteryPercentage) + "%");
                 temperature.setText((data.currentTemperature == null ? "?" : "" + data.currentTemperature / 10f) + "° / ");

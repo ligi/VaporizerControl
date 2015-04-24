@@ -6,6 +6,12 @@
               android:orientation="vertical"
               android:layout_margin="16dp">
 
+    <ProgressBar
+            android:id="@+id/progress_indicator"
+            style="@android:style/Widget.ProgressBar"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+
     <TextView
             android:id="@+id/intro_text"
             android:layout_width="wrap_content"
