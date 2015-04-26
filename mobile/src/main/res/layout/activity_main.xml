@@ -25,7 +25,7 @@
 
         <TextView
                 tools:text="temp"
-                android:textSize="64sp"
+                android:textSize="48sp"
                 android:fontFamily="sans-serif"
                 android:id="@+id/temperature"
                 android:layout_width="wrap_content"
@@ -33,7 +33,7 @@
 
         <TextView
                 tools:text="temp"
-                android:textSize="32sp"
+                android:textSize="24sp"
                 android:fontFamily="sans-serif"
                 android:layout_toRightOf="@+id/temperature"
                 android:id="@+id/temperatureSetPoint"
@@ -42,7 +42,7 @@
 
         <TextView
                 tools:text="batt"
-                android:textSize="32sp"
+                android:textSize="24sp"
                 android:fontFamily="sans-serif"
                 android:layout_toRightOf="@id/temperature"
                 android:layout_below="@id/temperatureSetPoint"
@@ -52,7 +52,7 @@
 
         <TextView
                 tools:text="batt"
-                android:textSize="32sp"
+                android:textSize="24sp"
                 android:fontFamily="sans-serif"
                 android:layout_below="@id/temperature"
                 android:id="@+id/battery"
@@ -63,7 +63,7 @@
 
         <TextView
                 tools:text="100%"
-                android:textSize="32sp"
+                android:textSize="24sp"
                 android:fontFamily="sans-serif"
                 android:layout_toRightOf="@id/temperature"
                 android:layout_below="@id/temperature"
