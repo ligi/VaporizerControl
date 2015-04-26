@@ -25,13 +25,13 @@ public class ChangeDialogs {
         discreteSeekBar.setIndicatorFormatter("%d°");
 
         if (comm.getData().ledPercentage != null) {
-            discreteSeekBar.setProgress(comm.getData().ledPercentage);
+            discreteSeekBar.setProgress(comm.getData().boostTemperature/10);
         }
 
         discreteSeekBar.setOnProgressChangeListener(new DiscreteSeekBar.OnProgressChangeListener() {
             @Override
             public void onProgressChanged(final DiscreteSeekBar discreteSeekBar, final int i, final boolean b) {
-                comm.setBoosterTemperature(i);
+                comm.setBoosterTemperature(i*10);
             }
         });
 
