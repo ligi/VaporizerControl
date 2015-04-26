@@ -24,12 +24,11 @@ public class DataDisplayActivity extends AppCompatActivity implements VaporizerD
 
     @OnClick(R.id.led)
     void ledClick() {
-        if (getApp().getVaporizerCommunicator().getData().ledPercentage == null || getApp().getVaporizerCommunicator().getData().ledPercentage == 100) {
-            getApp().getVaporizerCommunicator().setLEDBrightness(this, 0);
-        } else {
-            getApp().getVaporizerCommunicator().setLEDBrightness(this, 100);
-        }
+        final boolean isUnknownOrNotBright = getApp().getVaporizerCommunicator().getData().ledPercentage == null ||
+                                             getApp().getVaporizerCommunicator().getData().ledPercentage == 0;
+        getApp().getVaporizerCommunicator().setLEDBrightness(this, isUnknownOrNotBright ? 100 : 0);
     }
+
 
     @InjectView(R.id.battery)
     TextView battery;
