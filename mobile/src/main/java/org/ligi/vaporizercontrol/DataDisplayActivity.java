@@ -1,12 +1,10 @@
 package org.ligi.vaporizercontrol;
 
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.view.View;
-import android.widget.SeekBar;
 import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -35,32 +33,14 @@ public class DataDisplayActivity extends AppCompatActivity implements VaporizerD
 
     @OnLongClick(R.id.led)
     boolean onLEDLongClick() {
-        SeekBar seek = new SeekBar(this);
-        seek.setMax(100);
-        if (getApp().getVaporizerCommunicator().getData().ledPercentage != null) {
-            seek.setProgress(getApp().getVaporizerCommunicator().getData().ledPercentage);
-        }
-
-        seek.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(final SeekBar seekBar, final int progress, final boolean fromUser) {
-                getApp().getVaporizerCommunicator().setLEDBrightness(progress);
-            }
-
-            @Override
-            public void onStartTrackingTouch(final SeekBar seekBar) {
-
-            }
-
-            @Override
-            public void onStopTrackingTouch(final SeekBar seekBar) {
-
-            }
-        });
-        new AlertDialog.Builder(this).setMessage("Set LED brightness").setView(seek).setPositiveButton("OK", null).show();
+        ChangeDialogs.showLEDPercentageDialog(this, getApp().getVaporizerCommunicator());
         return true;
     }
 
+    @OnClick({R.id.temperature, R.id.temperatureSetPoint, R.id.tempBoost})
+    void onTemperatureClick() {
+        ChangeDialogs.showTemperatureDialog(this, getApp().getVaporizerCommunicator());
+    }
 
     @InjectView(R.id.battery)
     TextView battery;
