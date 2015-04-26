@@ -19,6 +19,25 @@ import org.ligi.vaporizercontrol.util.TemperatureFormatter;
 
 public class ChangeDialogs {
 
+    public static void setBooster(Context ctx, final VaporizerCommunicator comm) {
+        final DiscreteSeekBar discreteSeekBar = new DiscreteSeekBar(ctx);
+        discreteSeekBar.setMax((2100-comm.getData().setTemperature)/10);
+        discreteSeekBar.setIndicatorFormatter("%d°");
+
+        if (comm.getData().ledPercentage != null) {
+            discreteSeekBar.setProgress(comm.getData().ledPercentage);
+        }
+
+        discreteSeekBar.setOnProgressChangeListener(new DiscreteSeekBar.OnProgressChangeListener() {
+            @Override
+            public void onProgressChanged(final DiscreteSeekBar discreteSeekBar, final int i, final boolean b) {
+                comm.setBoosterTemperature(i);
+            }
+        });
+
+        new AlertDialog.Builder(ctx).setMessage("Set booster temperature").setView(discreteSeekBar).setPositiveButton("OK", null).show();
+    }
+
     public static void showLEDPercentageDialog(Context ctx, final VaporizerCommunicator comm) {
         final DiscreteSeekBar discreteSeekBar = new DiscreteSeekBar(ctx);
         discreteSeekBar.setMax(100);

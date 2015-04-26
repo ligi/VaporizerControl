@@ -1,26 +1,15 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:layout_gravity="center_vertical"
-              android:orientation="vertical"
-              android:layout_margin="16dp">
-
-    <ProgressBar
-            android:id="@+id/progress_indicator"
-            style="@android:style/Widget.ProgressBar"
-            android:layout_gravity="center_horizontal"
-            android:layout_width="wrap_content" android:layout_height="wrap_content"/>
-
-    <TextView
-            android:id="@+id/intro_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                xmlns:fab="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="16dp">
 
     <RelativeLayout
+            android:layout_centerInParent="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:id="@+id/info_container"
             tools:context=".MainActivity">
 
         <TextView
@@ -56,7 +45,7 @@
                 android:fontFamily="sans-serif"
                 android:layout_below="@id/temperature"
                 android:id="@+id/battery"
-                android:drawableLeft="@drawable/ic_action_battery_full"
+                android:drawableLeft="@drawable/ic_action_plug"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
@@ -68,9 +57,95 @@
                 android:layout_toRightOf="@id/temperature"
                 android:layout_below="@id/temperature"
                 android:id="@+id/led"
-                android:drawableLeft="@drawable/ic_action_brightness_medium"
+                android:drawableLeft="@drawable/bulb_grey"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
     </RelativeLayout>
-</LinearLayout>
+
+    <net.i2p.android.ext.floatingactionbutton.FloatingActionsMenu
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginBottom="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/fam"
+
+            fab:fab_labelStyle="@style/menu_labels_style"
+
+            fab:fab_icon="@drawable/ic_action_edit"
+            fab:fab_colorNormal="@color/accent"
+            fab:fab_title="Boost temperature"
+            fab:fab_colorPressed="@color/accent">
+
+        <net.i2p.android.ext.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fab_action_edit_settemp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                fab:fab_icon="@drawable/ic_action_temperature"
+                fab:fab_size="mini"
+                fab:fab_colorNormal="@color/accent"
+                fab:fab_title="Temperature setpoint"
+                fab:fab_colorPressed="@color/secondary"/>
+
+
+        <net.i2p.android.ext.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fab_action_edit_boost"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                fab:fab_size="mini"
+                fab:fab_icon="@drawable/ic_action_flash"
+                fab:fab_colorNormal="@color/accent"
+                fab:fab_title="Booster temperature"
+                fab:fab_colorPressed="@color/secondary"/>
+
+
+        <net.i2p.android.ext.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fab_action_edit_led"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                fab:fab_size="mini"
+                fab:fab_icon="@drawable/ic_action_bulb"
+                fab:fab_colorNormal="@color/accent"
+                fab:fab_title="LED Brightneess"
+                fab:fab_colorPressed="@color/secondary"/>
+
+
+    </net.i2p.android.ext.floatingactionbutton.FloatingActionsMenu>
+
+    <net.i2p.android.ext.floatingactionbutton.FloatingActionButton
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginBottom="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginEnd="16dp"
+
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            fab:fab_icon="@drawable/ic_action_edit"
+            fab:fab_colorNormal="@color/accent"
+            fab:fab_title="Boost temperature"
+            fab:fab_colorPressed="@color/secondary"/>
+
+
+    <TextView
+            android:layout_above="@id/info_container"
+            android:gravity="center"
+            android:id="@+id/intro_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    <ProgressBar
+            android:layout_above="@id/intro_text"
+            android:id="@+id/progress_indicator"
+            android:layout_centerHorizontal="true"
+            style="@android:style/Widget.ProgressBar"
+
+            android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+
+</RelativeLayout>

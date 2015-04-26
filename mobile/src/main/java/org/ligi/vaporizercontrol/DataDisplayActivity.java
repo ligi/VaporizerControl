@@ -10,6 +10,7 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 import butterknife.OnLongClick;
+import net.i2p.android.ext.floatingactionbutton.FloatingActionsMenu;
 import org.ligi.vaporizercontrol.util.TemperatureFormatter;
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
@@ -56,6 +57,33 @@ public class DataDisplayActivity extends AppCompatActivity implements VaporizerD
 
     @InjectView(R.id.led)
     TextView led;
+
+    @InjectView(R.id.fam)
+    FloatingActionsMenu fam;
+
+    @OnClick(R.id.fab)
+    void onFAMClick() {
+        fam.toggle();
+    }
+
+    @OnClick(R.id.fab_action_edit_boost)
+    void editBoostClick() {
+        ChangeDialogs.setBooster(this, getApp().getVaporizerCommunicator());
+        fam.collapse();
+    }
+
+    @OnClick(R.id.fab_action_edit_settemp)
+    void editSetTempClick() {
+        ChangeDialogs.showTemperatureDialog(this, getApp().getVaporizerCommunicator());
+        fam.collapse();
+    }
+
+
+    @OnClick(R.id.fab_action_edit_led)
+    void editLEDClick() {
+        ChangeDialogs.showLEDPercentageDialog(this, getApp().getVaporizerCommunicator());
+        fam.collapse();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

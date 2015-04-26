@@ -89,11 +89,25 @@ public class VaporizerCommunicator {
 
     public void setLEDBrightness(int val) {
         data.ledPercentage = val;
-        setValue(LED_CHARACTERISTIC_UUID,val);
+        setValue(LED_CHARACTERISTIC_UUID, val);
+    }
+
+    public void setBoosterTemperature(int val) {
+        data.boostTemperature = val;
+        setValue(TEMPERATURE_BOOST_CHARACTERISTIC_UUID, val);
     }
 
     private void setValue(final String uuid, final int val) {
+        if (gatt == null) {
+            return;
+        }
+
         final BluetoothGattService service = gatt.getService(UUID.fromString(SERVICE_UUID));
+
+        if (service == null) {
+            return;
+        }
+
         final BluetoothGattCharacteristic characteristic = service.getCharacteristic(UUID.fromString(uuid));
         characteristic.setValue(val, BluetoothGattCharacteristic.FORMAT_UINT16, 0);
         gatt.writeCharacteristic(characteristic);
@@ -103,7 +117,7 @@ public class VaporizerCommunicator {
 
     public void setTemperatureSetPoint(final int temperatureSetPoint) {
         data.setTemperature = temperatureSetPoint;
-        setValue(TEMPERATURE_SETPOINT_CHARACTERISTIC_UUID,temperatureSetPoint);
+        setValue(TEMPERATURE_SETPOINT_CHARACTERISTIC_UUID, temperatureSetPoint);
     }
 
 
