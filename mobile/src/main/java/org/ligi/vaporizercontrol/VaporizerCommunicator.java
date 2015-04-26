@@ -35,7 +35,6 @@ public class VaporizerCommunicator {
     private boolean batteryNotificationEnabled = false;
     private boolean tempNotificationEnabled = false;
 
-
     enum State {
         SCANNING,
         CONNECTING,
@@ -89,15 +88,24 @@ public class VaporizerCommunicator {
     }
 
     public void setLEDBrightness(int val) {
-        final BluetoothGattService service = gatt.getService(UUID.fromString(SERVICE_UUID));
-        final BluetoothGattCharacteristic characteristic = service.getCharacteristic(UUID.fromString(LED_CHARACTERISTIC_UUID));
-        characteristic.setValue(val, BluetoothGattCharacteristic.FORMAT_UINT16, 0);
-        if (gatt.writeCharacteristic(characteristic)) {
-            data.ledPercentage = val;
-            updateListener.onUpdate(data);
-        }
-        // TODO retry
+        data.ledPercentage = val;
+        setValue(LED_CHARACTERISTIC_UUID,val);
     }
+
+    private void setValue(final String uuid, final int val) {
+        final BluetoothGattService service = gatt.getService(UUID.fromString(SERVICE_UUID));
+        final BluetoothGattCharacteristic characteristic = service.getCharacteristic(UUID.fromString(uuid));
+        characteristic.setValue(val, BluetoothGattCharacteristic.FORMAT_UINT16, 0);
+        gatt.writeCharacteristic(characteristic);
+        updateListener.onUpdate(data);
+        // TODO retry on failure
+    }
+
+    public void setTemperatureSetPoint(final int temperatureSetPoint) {
+        data.setTemperature = temperatureSetPoint;
+        setValue(TEMPERATURE_SETPOINT_CHARACTERISTIC_UUID,temperatureSetPoint);
+    }
+
 
     private boolean readNextCharacteristic() {
         if ((data.batteryPercentage == null) || (data.batteryPercentage == 0)) {
