@@ -1,14 +1,17 @@
 package org.ligi.vaporizercontrol;
 
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.view.View;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
+import butterknife.OnLongClick;
 import org.ligi.vaporizercontrol.util.TemperatureFormatter;
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
@@ -26,7 +29,36 @@ public class DataDisplayActivity extends AppCompatActivity implements VaporizerD
     void ledClick() {
         final boolean isUnknownOrNotBright = getApp().getVaporizerCommunicator().getData().ledPercentage == null ||
                                              getApp().getVaporizerCommunicator().getData().ledPercentage == 0;
-        getApp().getVaporizerCommunicator().setLEDBrightness(this, isUnknownOrNotBright ? 100 : 0);
+        getApp().getVaporizerCommunicator().setLEDBrightness(isUnknownOrNotBright ? 100 : 0);
+    }
+
+
+    @OnLongClick(R.id.led)
+    boolean onLEDLongClick() {
+        SeekBar seek = new SeekBar(this);
+        seek.setMax(100);
+        if (getApp().getVaporizerCommunicator().getData().ledPercentage != null) {
+            seek.setProgress(getApp().getVaporizerCommunicator().getData().ledPercentage);
+        }
+
+        seek.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(final SeekBar seekBar, final int progress, final boolean fromUser) {
+                getApp().getVaporizerCommunicator().setLEDBrightness(progress);
+            }
+
+            @Override
+            public void onStartTrackingTouch(final SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(final SeekBar seekBar) {
+
+            }
+        });
+        new AlertDialog.Builder(this).setMessage("Set LED brightness").setView(seek).setPositiveButton("OK", null).show();
+        return true;
     }
 
 

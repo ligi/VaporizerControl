@@ -88,21 +88,19 @@ public class VaporizerCommunicator {
         return gatt.readCharacteristic(service.getCharacteristic(UUID.fromString(uuid)));
     }
 
-    public void setLEDBrightness(Context ctx, int val) {
+    public void setLEDBrightness(int val) {
         final BluetoothGattService service = gatt.getService(UUID.fromString(SERVICE_UUID));
         final BluetoothGattCharacteristic characteristic = service.getCharacteristic(UUID.fromString(LED_CHARACTERISTIC_UUID));
         characteristic.setValue(val, BluetoothGattCharacteristic.FORMAT_UINT16, 0);
-        if (!gatt.writeCharacteristic(characteristic)) {
-            Toast.makeText(ctx, "could not write char", Toast.LENGTH_LONG).show();
-        } else {
-            data.ledPercentage=val;
+        if (gatt.writeCharacteristic(characteristic)) {
+            data.ledPercentage = val;
             updateListener.onUpdate(data);
-            Toast.makeText(ctx, "char written", Toast.LENGTH_LONG).show();
         }
+        // TODO retry
     }
 
     private boolean readNextCharacteristic() {
-        if (data.batteryPercentage == null) {
+        if ((data.batteryPercentage == null) || (data.batteryPercentage == 0)) {
             return readCharacteristic(BATTERY_CHARACTERISTIC_UUID);
         }
 
