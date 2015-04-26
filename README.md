@@ -1,3 +1,9 @@
+[![Build Status](https://snap-ci.com/ligi/VaporizerControl/branch/master/build_image)](https://snap-ci.com/ligi/VaporizerControl/branch/master)
+
+### Vaporizer Control Crafty ( VCC ) ###
+
+![](art/512x512.png)
+
 Why?
 
  - The app from the vendor is to slow in showing battery state. I especilally disliked that a progress indicator always visually blocked the for me most important info - the battery state
