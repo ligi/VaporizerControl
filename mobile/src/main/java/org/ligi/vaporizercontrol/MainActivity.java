@@ -8,7 +8,9 @@ import android.view.View;
 import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
-import static android.view.View.*;
+import butterknife.OnClick;
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
 
 
 public class MainActivity extends AppCompatActivity implements VaporizerData.VaporizerUpdateListener {
@@ -18,6 +20,15 @@ public class MainActivity extends AppCompatActivity implements VaporizerData.Vap
 
     @InjectView(R.id.intro_text)
     TextView introText;
+
+    @OnClick(R.id.led)
+    void ledClick() {
+        if (getApp().getVaporizerCommunicator().getData().ledPercentage == null || getApp().getVaporizerCommunicator().getData().ledPercentage == 100) {
+            getApp().getVaporizerCommunicator().setLEDBrightness(this, 0);
+        } else {
+            getApp().getVaporizerCommunicator().setLEDBrightness(this, 100);
+        }
+    }
 
     @InjectView(R.id.battery)
     TextView battery;
@@ -68,7 +79,7 @@ public class MainActivity extends AppCompatActivity implements VaporizerData.Vap
                     if (data.hasData()) {
                         introText.setVisibility(GONE);
                         progress_indicator.setVisibility(GONE);
-                    } else  {
+                    } else {
                         introText.setText(Html.fromHtml(getString(R.string.intro_text)));
                         introText.setMovementMethod(new LinkMovementMethod());
                     }

@@ -32,6 +32,9 @@ public class VaporizerCommunicator {
     private VaporizerData.VaporizerUpdateListener updateListener;
     private VaporizerData data = new VaporizerData();
 
+    private boolean batteryNotificationEnabled = false;
+    private boolean tempNotificationEnabled = false;
+
 
     enum State {
         SCANNING,
@@ -80,9 +83,56 @@ public class VaporizerCommunicator {
         return context.getSharedPreferences("addr", Activity.MODE_PRIVATE);
     }
 
-    private void readCharacteristic(final String uuid) {
-        gatt.readCharacteristic(service.getCharacteristic(UUID.fromString(uuid)));
+    private boolean readCharacteristic(final String uuid) {
+        service = gatt.getService(UUID.fromString(SERVICE_UUID));
+        return gatt.readCharacteristic(service.getCharacteristic(UUID.fromString(uuid)));
     }
+
+    public void setLEDBrightness(Context ctx, int val) {
+        final BluetoothGattService service = gatt.getService(UUID.fromString(SERVICE_UUID));
+        final BluetoothGattCharacteristic characteristic = service.getCharacteristic(UUID.fromString(LED_CHARACTERISTIC_UUID));
+        characteristic.setValue(val, BluetoothGattCharacteristic.FORMAT_UINT16, 0);
+        if (!gatt.writeCharacteristic(characteristic)) {
+            Toast.makeText(ctx, "could not write char", Toast.LENGTH_LONG).show();
+        } else {
+            data.ledPercentage=val;
+            updateListener.onUpdate(data);
+            Toast.makeText(ctx, "char written", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private boolean readNextCharacteristic() {
+        if (data.batteryPercentage == null) {
+            return readCharacteristic(BATTERY_CHARACTERISTIC_UUID);
+        }
+
+        if (data.currentTemperature == null) {
+            return readCharacteristic(TEMPERATURE_CHARACTERISTIC_UUID);
+        }
+
+        if (data.setTemperature == null) {
+            return readCharacteristic(TEMPERATURE_SETPOINT_CHARACTERISTIC_UUID);
+        }
+
+        if (data.boostTemperature == null) {
+            return readCharacteristic(TEMPERATURE_BOOST_CHARACTERISTIC_UUID);
+        }
+
+        if (data.ledPercentage == null) {
+            return readCharacteristic(LED_CHARACTERISTIC_UUID);
+        }
+
+        if (!batteryNotificationEnabled) {
+            return batteryNotificationEnabled = enableNotification(gatt, UUID.fromString(BATTERY_CHARACTERISTIC_UUID));
+        }
+
+        if (!tempNotificationEnabled) {
+            return tempNotificationEnabled = enableNotification(gatt, UUID.fromString(TEMPERATURE_CHARACTERISTIC_UUID));
+        }
+
+        return true;
+    }
+
 
     private void connect(String addr) {
         state = State.CONNECTING;
@@ -99,54 +149,27 @@ public class VaporizerCommunicator {
             @Override
             public void onServicesDiscovered(final BluetoothGatt gatt, final int status) {
                 super.onServicesDiscovered(gatt, status);
-                final BluetoothGattService service = gatt.getService(UUID.fromString(SERVICE_UUID));
-
-                BluetoothGattCharacteristic characteristic = service.getCharacteristic(UUID.fromString(BATTERY_CHARACTERISTIC_UUID));
-                gatt.readCharacteristic(characteristic);
+                readNextCharacteristic();
             }
 
             @Override
             public void onCharacteristicRead(final BluetoothGatt gatt, final BluetoothGattCharacteristic characteristic, final int status) {
                 super.onCharacteristicRead(gatt, characteristic, status);
-
-                service = characteristic.getService();
-
-                switch (characteristic.getUuid().toString()) {
-
-                    case BATTERY_CHARACTERISTIC_UUID:
-                        readCharacteristic(TEMPERATURE_CHARACTERISTIC_UUID);
-                        break;
-
-                    case TEMPERATURE_CHARACTERISTIC_UUID:
-                        readCharacteristic(TEMPERATURE_SETPOINT_CHARACTERISTIC_UUID);
-                        break;
-
-                    case TEMPERATURE_SETPOINT_CHARACTERISTIC_UUID:
-                        readCharacteristic(TEMPERATURE_BOOST_CHARACTERISTIC_UUID);
-                        break;
-
-                    case TEMPERATURE_BOOST_CHARACTERISTIC_UUID:
-                        readCharacteristic(LED_CHARACTERISTIC_UUID);
-                        break;
-
-                    case LED_CHARACTERISTIC_UUID:
-                        readCharacteristic(TEMPERATURE_CHARACTERISTIC_UUID);
-                        break;
-
-                }
                 characteristicChange(characteristic);
+                readNextCharacteristic();
             }
 
             @Override
             public void onDescriptorWrite(final BluetoothGatt gatt, final BluetoothGattDescriptor descriptor, final int status) {
                 super.onDescriptorWrite(gatt, descriptor, status);
-                enableNotification(gatt, UUID.fromString(BATTERY_CHARACTERISTIC_UUID));
+                readNextCharacteristic();
             }
 
             @Override
             public void onCharacteristicChanged(final BluetoothGatt gatt, final BluetoothGattCharacteristic characteristic) {
                 super.onCharacteristicChanged(gatt, characteristic);
                 characteristicChange(characteristic);
+                readNextCharacteristic();
             }
         });
     }
@@ -182,14 +205,17 @@ public class VaporizerCommunicator {
         }
     }
 
-    private void enableNotification(final BluetoothGatt gatt, final UUID enableCharacteristicFromUUID) {
+    private boolean enableNotification(final BluetoothGatt gatt, final UUID enableCharacteristicFromUUID) {
+        service = gatt.getService(UUID.fromString(SERVICE_UUID));
         final BluetoothGattCharacteristic ledChar = service.getCharacteristic(enableCharacteristicFromUUID);
         gatt.setCharacteristicNotification(ledChar, true);
         BluetoothGattDescriptor descriptor = ledChar.getDescriptors().get(0);
         descriptor.setValue(BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE);
         if (!gatt.writeDescriptor(descriptor)) {
             Toast.makeText(context, "Could not write descriptor for notification", Toast.LENGTH_LONG).show();
+            return false;
         }
+        return true;
     }
 
     private void startScan() {
