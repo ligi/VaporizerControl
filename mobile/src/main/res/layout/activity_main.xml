@@ -110,7 +110,7 @@
                 fab:fab_size="mini"
                 fab:fab_icon="@drawable/ic_action_bulb"
                 fab:fab_colorNormal="@color/accent"
-                fab:fab_title="LED Brightneess"
+                fab:fab_title="LED Brightness"
                 fab:fab_colorPressed="@color/secondary"/>
 
 
