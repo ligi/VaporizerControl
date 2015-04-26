@@ -2,7 +2,7 @@
 
 ### Vaporizer Control Crafty ( VCC ) ###
 
-![](art/512x512.png)
+![](art/icon.png)
 
 Why?
 
