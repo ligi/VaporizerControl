@@ -9,6 +9,7 @@ import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
+import org.ligi.vaporizercontrol.util.TemperatureFormatter;
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 
@@ -86,11 +87,15 @@ public class DataDisplayActivity extends AppCompatActivity implements VaporizerD
                 }
 
                 battery.setText((data.batteryPercentage == null ? "?" : "" + data.batteryPercentage) + "%");
-                temperature.setText((data.currentTemperature == null ? "?" : "" + data.currentTemperature / 10f) + "° / ");
-                temperatureSetPoint.setText((data.setTemperature == null ? "?" : "" + data.setTemperature / 10f) + "°");
-                tempBoost.setText((data.boostTemperature == null ? "?" : "+" + data.boostTemperature / 10f) + "°");
+                temperature.setText(getFormattedTemp(data.currentTemperature) + " / ");
+                temperatureSetPoint.setText(getFormattedTemp(data.setTemperature));
+                tempBoost.setText("+" + getFormattedTemp(data.boostTemperature));
                 led.setText((data.ledPercentage == null ? "?" : "" + data.ledPercentage) + "%");
             }
         });
+    }
+
+    private String getFormattedTemp(Integer temp) {
+        return TemperatureFormatter.getFormattedTemp(temp, getApp().getSettings().getTemperatureFormat());
     }
 }
