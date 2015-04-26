@@ -1,6 +1,6 @@
 [![Build Status](https://snap-ci.com/ligi/VaporizerControl/branch/master/build_image)](https://snap-ci.com/ligi/VaporizerControl/branch/master)
 
-[![Android app on Google Play](https://developer.android.com/images/brand/en_app_rgb_wo_60.png)](https://play.google.com/store/apps/details?id=org.ligi.ligi.vaporizercontrol)
+[![Android app on Google Play](https://developer.android.com/images/brand/en_app_rgb_wo_60.png)](https://play.google.com/store/apps/details?id=org.ligi.vaporizercontrol)
 
 # Vaporizer Control Crafty ( VCC ) #
 
