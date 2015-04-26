@@ -13,7 +13,7 @@ import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 
 
-public class MainActivity extends AppCompatActivity implements VaporizerData.VaporizerUpdateListener {
+public class DataDisplayActivity extends AppCompatActivity implements VaporizerData.VaporizerUpdateListener {
 
     @InjectView(R.id.progress_indicator)
     View progress_indicator;
