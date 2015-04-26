@@ -16,6 +16,8 @@
  - if you know other BLE Vaporizers - please let me know
  - if you have information about other plants and their temperature<>effect mappings - please also let me know.
 
+##Fun Facts##
+ This app was created on 4-20-2015 ;-)
 
 ##License##
  This is free software under GPLv3
