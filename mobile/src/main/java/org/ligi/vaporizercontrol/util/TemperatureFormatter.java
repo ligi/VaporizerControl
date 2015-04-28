@@ -5,9 +5,9 @@ import org.ligi.vaporizercontrol.Settings;
 public class TemperatureFormatter {
     public static String getFormattedTemp(Integer temp, int temperatureFormat) {
         if (temperatureFormat == Settings.TEMPERATURE_CELSIUS) {
-            return getIntegerForTemperature(temp, 0) + " °C";
+            return getIntegerForTemperature(temp, temperatureFormat) + " °C";
         } else {
-            return getIntegerForTemperature(temp, 338) + " °F";
+            return getIntegerForTemperature(temp, temperatureFormat) + " °F";
         }
     }
 
