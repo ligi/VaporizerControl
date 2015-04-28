@@ -140,12 +140,4 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
-    <ProgressBar
-            android:layout_above="@id/intro_text"
-            android:id="@+id/progress_indicator"
-            android:layout_centerHorizontal="true"
-            style="@android:style/Widget.ProgressBar"
-
-            android:layout_width="wrap_content" android:layout_height="wrap_content"/>
-
 </RelativeLayout>

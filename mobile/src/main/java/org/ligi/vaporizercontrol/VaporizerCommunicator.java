@@ -18,6 +18,7 @@ public class VaporizerCommunicator {
 
 
     public static final String SERVICE_UUID = "00000001-4c45-4b43-4942-265a524f5453";
+
     public static final String TEMPERATURE_CHARACTERISTIC_UUID = "00000011-4c45-4b43-4942-265a524f5453";
     public static final String TEMPERATURE_SETPOINT_CHARACTERISTIC_UUID = "00000021-4c45-4b43-4942-265a524f5453";
     public static final String TEMPERATURE_BOOST_CHARACTERISTIC_UUID = "00000031-4c45-4b43-4942-265a524f5453";
@@ -49,9 +50,13 @@ public class VaporizerCommunicator {
         bt = ((BluetoothManager) context.getSystemService(Activity.BLUETOOTH_SERVICE)).getAdapter();
     }
 
+    public boolean isBluetoothAvailable() {
+        return bt != null;
+    }
+
     public void destroy() {
         this.updateListener = null;
-        if (state.equals(State.SCANNING)) {
+        if (state.equals(State.SCANNING) && bt != null) {
             bt.stopLeScan(null);
         }
 

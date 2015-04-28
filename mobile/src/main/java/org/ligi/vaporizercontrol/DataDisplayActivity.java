@@ -1,6 +1,7 @@
 package org.ligi.vaporizercontrol;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
@@ -11,6 +12,7 @@ import butterknife.InjectView;
 import butterknife.OnClick;
 import butterknife.OnLongClick;
 import net.i2p.android.ext.floatingactionbutton.FloatingActionsMenu;
+import net.steamcrafted.loadtoast.LoadToast;
 import org.ligi.vaporizercontrol.util.TemperatureFormatter;
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
@@ -18,11 +20,10 @@ import static android.view.View.VISIBLE;
 
 public class DataDisplayActivity extends AppCompatActivity implements VaporizerData.VaporizerUpdateListener {
 
-    @InjectView(R.id.progress_indicator)
-    View progress_indicator;
-
     @InjectView(R.id.intro_text)
     TextView introText;
+
+    private LoadToast loadToast;
 
     @OnClick(R.id.led)
     void ledClick() {
@@ -91,6 +92,10 @@ public class DataDisplayActivity extends AppCompatActivity implements VaporizerD
 
         setContentView(R.layout.activity_main);
         ButterKnife.inject(this);
+
+        loadToast = new LoadToast(this);
+        loadToast.setText("searching crafty");
+        loadToast.show();
     }
 
     @Override
@@ -101,9 +106,18 @@ public class DataDisplayActivity extends AppCompatActivity implements VaporizerD
 
     @Override
     protected void onResume() {
-        getApp().getVaporizerCommunicator().connectAndRegisterForUpdates(this);
-        onUpdate(getApp().getVaporizerCommunicator().getData());
         super.onResume();
+        if (!getApp().getVaporizerCommunicator().isBluetoothAvailable()) {
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    loadToast.error();
+                }
+            },1000);
+        } else {
+            getApp().getVaporizerCommunicator().connectAndRegisterForUpdates(this);
+        }
+        onUpdate(getApp().getVaporizerCommunicator().getData());
     }
 
     private App getApp() {
@@ -118,7 +132,7 @@ public class DataDisplayActivity extends AppCompatActivity implements VaporizerD
                 if (introText.getVisibility() == VISIBLE) {
                     if (data.hasData()) {
                         introText.setVisibility(GONE);
-                        progress_indicator.setVisibility(GONE);
+                        loadToast.success();
                     } else {
                         introText.setText(Html.fromHtml(getString(R.string.intro_text)));
                         introText.setMovementMethod(new LinkMovementMethod());
