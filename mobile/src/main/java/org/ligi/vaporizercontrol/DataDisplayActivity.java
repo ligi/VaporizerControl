@@ -5,8 +5,8 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
-import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
@@ -111,9 +111,10 @@ public class DataDisplayActivity extends AppCompatActivity implements VaporizerD
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
+                    Toast.makeText(DataDisplayActivity.this, "can not scan - no BT available", Toast.LENGTH_LONG).show();
                     loadToast.error();
                 }
-            },1000);
+            }, 1000);
         } else {
             getApp().getVaporizerCommunicator().connectAndRegisterForUpdates(this);
         }
