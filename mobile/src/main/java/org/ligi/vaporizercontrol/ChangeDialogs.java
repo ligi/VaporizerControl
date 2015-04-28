@@ -21,17 +21,17 @@ public class ChangeDialogs {
 
     public static void setBooster(Context ctx, final VaporizerCommunicator comm) {
         final DiscreteSeekBar discreteSeekBar = new DiscreteSeekBar(ctx);
-        discreteSeekBar.setMax((2100-comm.getData().setTemperature)/10);
+        discreteSeekBar.setMax((2100 - comm.getData().setTemperature) / 10);
         discreteSeekBar.setIndicatorFormatter("%d°");
 
         if (comm.getData().ledPercentage != null) {
-            discreteSeekBar.setProgress(comm.getData().boostTemperature/10);
+            discreteSeekBar.setProgress(comm.getData().boostTemperature / 10);
         }
 
         discreteSeekBar.setOnProgressChangeListener(new DiscreteSeekBar.OnProgressChangeListener() {
             @Override
             public void onProgressChanged(final DiscreteSeekBar discreteSeekBar, final int i, final boolean b) {
-                comm.setBoosterTemperature(i*10);
+                comm.setBoosterTemperature(i * 10);
             }
         });
 
@@ -114,15 +114,12 @@ public class ChangeDialogs {
         }
         scrollView.addView(lin);
 
-        new AlertDialog.Builder(ctx).setView(scrollView)
-                                    .setMessage("Set Temperature")
-                                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(final DialogInterface dialog, final int which) {
-                                            comm.setTemperatureSetPoint(discreteSeekBar.getProgress()*10);
-                                        }
-                                    })
-                                    .show();
+        new AlertDialog.Builder(ctx).setView(scrollView).setMessage("Set Temperature").setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(final DialogInterface dialog, final int which) {
+                comm.setTemperatureSetPoint(discreteSeekBar.getProgress() * 10);
+            }
+        }).show();
     }
 
     private static class TemperatureSetting {
