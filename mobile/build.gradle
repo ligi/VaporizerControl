@@ -10,8 +10,8 @@ android {
         applicationId "org.ligi.vaporizercontrol"
         minSdkVersion 18
         targetSdkVersion 22
-        versionCode 12
-        versionName "1.2"
+        versionCode 14
+        versionName "1.4"
     }
     buildTypes {
         release {
