@@ -1,10 +1,13 @@
 package org.ligi.vaporizercontrol;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 import butterknife.ButterKnife;
@@ -13,6 +16,8 @@ import butterknife.OnClick;
 import butterknife.OnLongClick;
 import net.i2p.android.ext.floatingactionbutton.FloatingActionsMenu;
 import net.steamcrafted.loadtoast.LoadToast;
+import org.ligi.tracedroid.TraceDroid;
+import org.ligi.tracedroid.sending.TraceDroidEmailSender;
 import org.ligi.vaporizercontrol.util.TemperatureFormatter;
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
@@ -93,9 +98,14 @@ public class DataDisplayActivity extends AppCompatActivity implements VaporizerD
         setContentView(R.layout.activity_main);
         ButterKnife.inject(this);
 
-        loadToast = new LoadToast(this);
-        loadToast.setText("searching crafty");
-        loadToast.show();
+        if (TraceDroid.getStackTraceFiles().length > 0) {
+            TraceDroidEmailSender.sendStackTraces("ligi@ligi.de", this);
+        } else {
+            loadToast = new LoadToast(this);
+            loadToast.setText("searching crafty");
+            loadToast.show();
+        }
+
     }
 
     @Override
@@ -126,6 +136,16 @@ public class DataDisplayActivity extends AppCompatActivity implements VaporizerD
     }
 
     @Override
+    public boolean onOptionsItemSelected(final MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_settings:
+                startActivity(new Intent(this, SettingsActivity.class));
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     public void onUpdate(final VaporizerData data) {
         runOnUiThread(new Runnable() {
             @Override
@@ -141,15 +161,17 @@ public class DataDisplayActivity extends AppCompatActivity implements VaporizerD
                 }
 
                 battery.setText((data.batteryPercentage == null ? "?" : "" + data.batteryPercentage) + "%");
-                temperature.setText(getFormattedTemp(data.currentTemperature) + " / ");
-                temperatureSetPoint.setText(getFormattedTemp(data.setTemperature));
-                tempBoost.setText("+" + getFormattedTemp(data.boostTemperature));
+                temperature.setText(TemperatureFormatter.Companion.getFormattedTemp(DataDisplayActivity.this,data.currentTemperature, true) + " / ");
+                temperatureSetPoint.setText(TemperatureFormatter.Companion.getFormattedTemp(DataDisplayActivity.this,data.setTemperature, true));
+                tempBoost.setText("+" + TemperatureFormatter.Companion.getFormattedTemp(DataDisplayActivity.this,data.boostTemperature, false));
                 led.setText((data.ledPercentage == null ? "?" : "" + data.ledPercentage) + "%");
             }
         });
     }
 
-    private String getFormattedTemp(Integer temp) {
-        return TemperatureFormatter.getFormattedTemp(temp, getApp().getSettings().getTemperatureFormat());
+    @Override
+    public boolean onCreateOptionsMenu(final Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return super.onCreateOptionsMenu(menu);
     }
 }

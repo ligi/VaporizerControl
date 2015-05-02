@@ -1,5 +1,6 @@
 apply plugin: 'android-sdk-manager'
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
 
 android {
     compileSdkVersion 22
@@ -33,4 +34,9 @@ dependencies {
     compile 'com.acappelli:discreteSeekBar:1.0'
     compile 'org.ligi:AXT:0.33'
 
+    compile 'org.jetbrains.anko:anko:0.6-15s'
+    compile 'org.jetbrains.kotlin:kotlin-stdlib:0.11.91.4'
+    compile 'org.jetbrains.kotlin:kotlin-runtime:0.11.91.4'
+
+    compile 'org.ligi:tracedroid:1.4'
 }

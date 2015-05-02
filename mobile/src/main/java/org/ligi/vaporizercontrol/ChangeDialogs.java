@@ -22,9 +22,9 @@ public class ChangeDialogs {
     public static void setBooster(Context ctx, final VaporizerCommunicator comm) {
         final DiscreteSeekBar discreteSeekBar = new DiscreteSeekBar(ctx);
         discreteSeekBar.setMax((2100 - comm.getData().setTemperature) / 10);
-        discreteSeekBar.setIndicatorFormatter("%d°");
+        discreteSeekBar.setIndicatorFormatter("%d°C");
 
-        if (comm.getData().ledPercentage != null) {
+        if (comm.getData().boostTemperature != null) {
             discreteSeekBar.setProgress(comm.getData().boostTemperature / 10);
         }
 
@@ -62,7 +62,7 @@ public class ChangeDialogs {
         add(new TemperatureSetting(1230, "<a href='http://en.wikipedia.org/wiki/Syzygium_aromaticum'>Clove</a> Dried flower buds"));
         add(new TemperatureSetting(1300,
                                    "<a href='http://en.wikipedia.org/wiki/Eucalyptus_globulus'>Eucapyptus</a> " +
-                                   "or <a href='http://en.wikipedia.org/wiki/Lavandula_angustifolia'>Lavender</a>  Leaves"));
+                                   "or <a href='http://en.wikipedia.org/wiki/Lavandula_angustifolia'>Lavender</a> Leaves"));
         add(new TemperatureSetting(1400, "<a href='http://en.wikipedia.org/wiki/Ginkgo_biloba'>Ginkgo</a> Leaves or seeds"));
         add(new TemperatureSetting(1420, "<a href='http://en.wikipedia.org/wiki/Melissa_officinalis'>Lemon balm</a> Leaves"));
         add(new TemperatureSetting(1540, "<a href='http://en.wikipedia.org/wiki/Humulus_lupulus'>Hops</a> Cones"));
@@ -101,7 +101,7 @@ public class ChangeDialogs {
             txt.setMovementMethod(new LinkMovementMethod());
 
             final Button button = new Button(ctx);
-            button.setText(TemperatureFormatter.getFormattedTemp(temperatureSetting.temp, Settings.TEMPERATURE_CELSIUS));
+            button.setText(TemperatureFormatter.Companion.getFormattedTemp(ctx, temperatureSetting.temp, true));
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(final View v) {
@@ -111,8 +111,7 @@ public class ChangeDialogs {
             grp.addView(button);
             grp.addView(txt);
             lin.addView(grp);
-        }
-        scrollView.addView(lin);
+        } scrollView.addView(lin);
 
         new AlertDialog.Builder(ctx).setView(scrollView).setMessage("Set Temperature").setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override

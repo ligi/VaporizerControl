@@ -10,7 +10,6 @@ import android.bluetooth.BluetoothGattDescriptor;
 import android.bluetooth.BluetoothGattService;
 import android.bluetooth.BluetoothManager;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.widget.Toast;
 import java.util.UUID;
 
@@ -44,9 +43,11 @@ public class VaporizerCommunicator {
     }
 
     private State state = State.DISCONNECTED;
+    private Settings settings;
 
     public VaporizerCommunicator(final Context context) {
         this.context = context;
+        settings = new Settings(context);
         bt = ((BluetoothManager) context.getSystemService(Activity.BLUETOOTH_SERVICE)).getAdapter();
     }
 
@@ -70,22 +71,14 @@ public class VaporizerCommunicator {
     public void connectAndRegisterForUpdates(VaporizerData.VaporizerUpdateListener updateListener) {
         this.updateListener = updateListener;
         if (state == State.DISCONNECTED) {
-            if (getAutoConnectMAC() != null) {
-                connect(getAutoConnectMAC());
+            if (settings.getAutoConnectMAC() != null) {
+                connect(settings.getAutoConnectMAC());
             } else {
                 startScan();
             }
         }
     }
 
-
-    private String getAutoConnectMAC() {
-        return getPrefs().getString("addr", null);
-    }
-
-    private SharedPreferences getPrefs() {
-        return context.getSharedPreferences("addr", Activity.MODE_PRIVATE);
-    }
 
     private boolean readCharacteristic(final String uuid) {
         service = gatt.getService(UUID.fromString(SERVICE_UUID));
@@ -161,7 +154,7 @@ public class VaporizerCommunicator {
 
     private void connect(String addr) {
         state = State.CONNECTING;
-        getPrefs().edit().putString("addr", addr).commit();
+        settings.setAutoConnectAddr(addr);
         bt.getRemoteDevice(addr).connectGatt(context, true, new BluetoothGattCallback() {
             @Override
             public void onConnectionStateChange(final BluetoothGatt newGatt, final int status, final int newState) {

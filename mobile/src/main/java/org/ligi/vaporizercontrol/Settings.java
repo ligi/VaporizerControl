@@ -1,16 +1,56 @@
 package org.ligi.vaporizercontrol;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 
 public class Settings {
-    public final static int TEMPERATURE_CELSIUS=0;
-    public final static int TEMPERATURE_FAHRENHEIT=1;
+    public final static int TEMPERATURE_CELSIUS = 0;
+    public final static int TEMPERATURE_FAHRENHEIT = 1;
+    public final static int TEMPERATURE_KELVIN = 2;
 
-    public Settings(final Context app) {
+    private final Context ctx;
+    private String autoConnectAddr;
 
+    public Settings(final Context ctx) {
+        this.ctx = ctx;
+    }
+
+    private SharedPreferences getPrefs() {
+        return ctx.getSharedPreferences("settings", Activity.MODE_PRIVATE);
     }
 
     public int getTemperatureFormat() {
-        return TEMPERATURE_CELSIUS;
+        return getPrefs().getInt("temp", TEMPERATURE_CELSIUS);
     }
+
+    public void setTemperatureFormat(int format) {
+        getPrefs().edit().putInt("temp", format).commit();
+    }
+
+    public String getAutoConnectMAC() {
+        return getPrefs().getString("addr", null);
+    }
+
+    public void setAutoConnectAddr(final String addr) {
+        getPrefs().edit().putString("addr", addr).commit();
+    }
+
+    public boolean isDisplayUnitWanted() {
+        return getPrefs().getBoolean("unit", true);
+    }
+
+    public void shouldDisplayUnit(final boolean should) {
+        getPrefs().edit().putBoolean("unit", should).commit();
+    }
+
+    public boolean isPreciseWanted() {
+        return getPrefs().getBoolean("precise", false);
+    }
+
+    public void shouldBePrecise(final boolean should) {
+        getPrefs().edit().putBoolean("precise", should).commit();
+    }
+
+
 }

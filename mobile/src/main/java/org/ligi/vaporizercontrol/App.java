@@ -1,6 +1,7 @@
 package org.ligi.vaporizercontrol;
 
 import android.app.Application;
+import org.ligi.tracedroid.TraceDroid;
 
 public class App extends Application {
 
@@ -12,6 +13,8 @@ public class App extends Application {
         super.onCreate();
         communicator = new VaporizerCommunicator(this);
         settings = new Settings(this);
+
+        TraceDroid.init(this);
     }
 
     public VaporizerCommunicator getVaporizerCommunicator() {
