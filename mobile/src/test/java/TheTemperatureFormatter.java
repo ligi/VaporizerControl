@@ -50,4 +50,9 @@ public class TheTemperatureFormatter {
         when(settings.getTemperatureFormat()).thenReturn(Settings.TEMPERATURE_KELVIN);
         assertThat(TemperatureFormatter.Companion.getFormattedTemp(settings, 231, true)).isEqualTo("296");
     }
+
+    @Test
+    public void testThatQuestionMarkWorks() {
+        assertThat(TemperatureFormatter.Companion.getFormattedTemp(settings, null, true)).isEqualTo("?");
+    }
 }
