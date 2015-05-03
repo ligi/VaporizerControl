@@ -22,7 +22,6 @@ import org.ligi.vaporizercontrol.util.TemperatureFormatter;
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 
-
 public class DataDisplayActivity extends AppCompatActivity implements VaporizerData.VaporizerUpdateListener {
 
     @InjectView(R.id.intro_text)
@@ -98,20 +97,15 @@ public class DataDisplayActivity extends AppCompatActivity implements VaporizerD
         setContentView(R.layout.activity_main);
         ButterKnife.inject(this);
 
+        loadToast = new LoadToast(this);
+
         if (TraceDroid.getStackTraceFiles().length > 0) {
             TraceDroidEmailSender.sendStackTraces("ligi@ligi.de", this);
         } else {
-            loadToast = new LoadToast(this);
             loadToast.setText("searching crafty");
             loadToast.show();
         }
 
-    }
-
-    @Override
-    protected void onPause() {
-        getApp().getVaporizerCommunicator().destroy();
-        super.onPause();
     }
 
     @Override
