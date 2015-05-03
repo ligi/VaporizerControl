@@ -7,7 +7,6 @@ import android.content.SharedPreferences;
 public class SharedPreferencesSettings implements WritableSettings {
 
     private final Context ctx;
-    private String autoConnectAddr;
 
     public SharedPreferencesSettings(final Context ctx) {
         this.ctx = ctx;
