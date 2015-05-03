@@ -10,11 +10,11 @@ public class App extends Application {
 
     @Override
     public void onCreate() {
-        super.onCreate();
-        communicator = new VaporizerCommunicator(this);
-        settings = new SharedPreferencesSettings(this);
-
         TraceDroid.init(this);
+        settings = new SharedPreferencesSettings(this);
+        communicator = new VaporizerCommunicator(this);
+
+        super.onCreate();
     }
 
     public VaporizerCommunicator getVaporizerCommunicator() {
