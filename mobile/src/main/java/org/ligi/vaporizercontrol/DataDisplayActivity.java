@@ -161,9 +161,10 @@ public class DataDisplayActivity extends AppCompatActivity implements VaporizerD
                 }
 
                 battery.setText((data.batteryPercentage == null ? "?" : "" + data.batteryPercentage) + "%");
-                temperature.setText(TemperatureFormatter.Companion.getFormattedTemp(DataDisplayActivity.this,data.currentTemperature, true) + " / ");
-                temperatureSetPoint.setText(TemperatureFormatter.Companion.getFormattedTemp(DataDisplayActivity.this,data.setTemperature, true));
-                tempBoost.setText("+" + TemperatureFormatter.Companion.getFormattedTemp(DataDisplayActivity.this,data.boostTemperature, false));
+                final Settings settings = getApp().getSettings();
+                temperature.setText(TemperatureFormatter.Companion.getFormattedTemp(settings, data.currentTemperature, true) + " / ");
+                temperatureSetPoint.setText(TemperatureFormatter.Companion.getFormattedTemp(settings, data.setTemperature, true));
+                tempBoost.setText("+" + TemperatureFormatter.Companion.getFormattedTemp(settings, data.boostTemperature, false));
                 led.setText((data.ledPercentage == null ? "?" : "" + data.ledPercentage) + "%");
             }
         });

@@ -12,7 +12,7 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
         communicator = new VaporizerCommunicator(this);
-        settings = new Settings(this);
+        settings = new SharedPreferencesSettings(this);
 
         TraceDroid.init(this);
     }

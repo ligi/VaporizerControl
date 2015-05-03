@@ -75,6 +75,9 @@ public class ChangeDialogs {
     }};
 
     public static void showTemperatureDialog(final Context ctx, final VaporizerCommunicator comm) {
+
+        final Settings settings=((App)ctx.getApplicationContext()).getSettings();
+
         final ScrollView scrollView = new ScrollView(ctx);
         scrollView.setLayoutParams(new ScrollView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         final LinearLayout lin = new LinearLayout(ctx);
@@ -101,7 +104,7 @@ public class ChangeDialogs {
             txt.setMovementMethod(new LinkMovementMethod());
 
             final Button button = new Button(ctx);
-            button.setText(TemperatureFormatter.Companion.getFormattedTemp(ctx, temperatureSetting.temp, true));
+            button.setText(TemperatureFormatter.Companion.getFormattedTemp(settings, temperatureSetting.temp, true));
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(final View v) {

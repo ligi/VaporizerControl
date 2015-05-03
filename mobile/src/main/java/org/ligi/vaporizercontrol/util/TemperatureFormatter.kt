@@ -16,14 +16,12 @@ public class TemperatureFormatter {
             }
         }
 
-        public fun getFormattedTemp(ctx: Context, temp: Int?, absolute: Boolean): String {
-            val tempFormat = getSettings(ctx).getTemperatureFormat();
-            return getFormattedTemp(ctx, temp, tempFormat, absolute);
+        public fun getFormattedTemp(settings: Settings, temp: Int?, absolute: Boolean): String {
+            val tempFormat = settings.getTemperatureFormat();
+            return getFormattedTemp(settings, temp, tempFormat, absolute);
         }
 
-        private fun getSettings(ctx: Context) = (ctx.getApplicationContext() as App).getSettings()
-
-        public fun getFormattedTemp(ctx: Context, temp: Int?, temperatureFormat: Int, absolute: Boolean): String {
+        public fun getFormattedTemp(settings: Settings, temp: Int?, temperatureFormat: Int, absolute: Boolean): String {
             var valString: String = if (temp == null) {
                 "?"
             } else {
@@ -31,10 +29,10 @@ public class TemperatureFormatter {
                     Settings.TEMPERATURE_FAHRENHEIT -> temp * 0.18f + if (absolute) 32 else 0
                     Settings.TEMPERATURE_KELVIN -> 0.1f * temp + (if (absolute) 273.15f else 1f)
                     else -> 0.1f * temp
-                }.format(if (getSettings(ctx).isPreciseWanted()) 1 else 0)
+                }.format(if (settings.isPreciseWanted()) 1 else 0)
             }
 
-            if (!getSettings(ctx).isDisplayUnitWanted()) {
+            if (!settings.isDisplayUnitWanted()) {
                 return valString
             }
 

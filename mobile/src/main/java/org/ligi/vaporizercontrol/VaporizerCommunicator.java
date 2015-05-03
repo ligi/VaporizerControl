@@ -47,7 +47,7 @@ public class VaporizerCommunicator {
 
     public VaporizerCommunicator(final Context context) {
         this.context = context;
-        settings = new Settings(context);
+        settings = ((App)context.getApplicationContext()).getSettings();
         bt = ((BluetoothManager) context.getSystemService(Activity.BLUETOOTH_SERVICE)).getAdapter();
     }
 
