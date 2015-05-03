@@ -102,8 +102,10 @@ public class DataDisplayActivity extends AppCompatActivity implements VaporizerD
         if (TraceDroid.getStackTraceFiles().length > 0) {
             TraceDroidEmailSender.sendStackTraces("ligi@ligi.de", this);
         } else {
-            loadToast.setText("searching crafty");
-            loadToast.show();
+            if (!getApp().getVaporizerCommunicator().getData().hasData()) {
+                loadToast.setText("searching crafty");
+                loadToast.show();
+            }
         }
 
     }
