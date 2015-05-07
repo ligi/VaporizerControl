@@ -16,7 +16,6 @@ import butterknife.OnClick;
 import butterknife.OnLongClick;
 import net.i2p.android.ext.floatingactionbutton.FloatingActionsMenu;
 import net.steamcrafted.loadtoast.LoadToast;
-import org.ligi.tracedroid.TraceDroid;
 import org.ligi.tracedroid.sending.TraceDroidEmailSender;
 import org.ligi.vaporizercontrol.util.TemperatureFormatter;
 import static android.view.View.GONE;
@@ -99,16 +98,12 @@ public class DataDisplayActivity extends AppCompatActivity implements VaporizerD
 
         loadToast = new LoadToast(this);
 
-        if (TraceDroid.getStackTraceFiles().length > 0) {
-            TraceDroidEmailSender.sendStackTraces("ligi@ligi.de", this);
-        } else {
-            if (!getApp().getVaporizerCommunicator().getData().hasData()) {
-                loadToast.setText("searching crafty");
-                loadToast.show();
-            }
+        if (!TraceDroidEmailSender.sendStackTraces("ligi@ligi.de", this) && !getApp().getVaporizerCommunicator().getData().hasData()) {
+            loadToast.setText("searching crafty");
+            loadToast.show();
         }
-
     }
+
 
     @Override
     protected void onResume() {
