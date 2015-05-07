@@ -1,4 +1,4 @@
-package org.ligi.vaporizercontrol;
+package org.ligi.vaporizercontrol.model;
 
 public interface Settings {
     int TEMPERATURE_CELSIUS = 0;

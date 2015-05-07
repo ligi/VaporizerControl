@@ -1,4 +1,4 @@
-package org.ligi.vaporizercontrol;
+package org.ligi.vaporizercontrol.model;
 
 import android.support.annotation.Nullable;
 

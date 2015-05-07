@@ -1,7 +1,10 @@
-package org.ligi.vaporizercontrol;
+package org.ligi.vaporizercontrol.wiring;
 
 import android.app.Application;
 import org.ligi.tracedroid.TraceDroid;
+import org.ligi.vaporizercontrol.model.Settings;
+import org.ligi.vaporizercontrol.model.SharedPreferencesSettings;
+import org.ligi.vaporizercontrol.model.VaporizerCommunicator;
 
 public class App extends Application {
 

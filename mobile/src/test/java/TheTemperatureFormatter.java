@@ -1,6 +1,6 @@
 import org.junit.Before;
 import org.junit.Test;
-import org.ligi.vaporizercontrol.Settings;
+import org.ligi.vaporizercontrol.model.Settings;
 import org.ligi.vaporizercontrol.util.TemperatureFormatter;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;

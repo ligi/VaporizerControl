@@ -1,4 +1,4 @@
-package org.ligi.vaporizercontrol;
+package org.ligi.vaporizercontrol.model;
 
 import android.app.Activity;
 import android.content.Context;

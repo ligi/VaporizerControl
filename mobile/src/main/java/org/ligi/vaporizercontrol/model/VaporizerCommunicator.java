@@ -1,4 +1,4 @@
-package org.ligi.vaporizercontrol;
+package org.ligi.vaporizercontrol.model;
 
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
@@ -12,6 +12,7 @@ import android.bluetooth.BluetoothManager;
 import android.content.Context;
 import android.widget.Toast;
 import java.util.UUID;
+import org.ligi.vaporizercontrol.wiring.App;
 
 public class VaporizerCommunicator {
 

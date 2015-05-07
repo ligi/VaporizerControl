@@ -1,4 +1,4 @@
-package org.ligi.vaporizercontrol;
+package org.ligi.vaporizercontrol.ui;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -15,6 +15,9 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 import org.adw.library.widgets.discreteseekbar.DiscreteSeekBar;
+import org.ligi.vaporizercontrol.wiring.App;
+import org.ligi.vaporizercontrol.model.Settings;
+import org.ligi.vaporizercontrol.model.VaporizerCommunicator;
 import org.ligi.vaporizercontrol.util.TemperatureFormatter;
 
 public class ChangeDialogs {

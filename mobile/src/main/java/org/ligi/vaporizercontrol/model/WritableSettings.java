@@ -1,4 +1,4 @@
-package org.ligi.vaporizercontrol;
+package org.ligi.vaporizercontrol.model;
 
 public interface WritableSettings extends Settings{
 

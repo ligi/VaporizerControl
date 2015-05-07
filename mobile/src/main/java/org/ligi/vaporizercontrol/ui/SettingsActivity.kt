@@ -1,4 +1,4 @@
-package org.ligi.vaporizercontrol
+package org.ligi.vaporizercontrol.ui
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
@@ -6,7 +6,8 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import org.jetbrains.anko.*
-
+import org.ligi.vaporizercontrol.wiring.App
+import org.ligi.vaporizercontrol.model.Settings
 
 public class SettingsActivity : AppCompatActivity() {
 
