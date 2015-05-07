@@ -44,7 +44,7 @@ public class VaporizerCommunicator {
     }
 
     private State state = State.DISCONNECTED;
-    private Settings settings;
+    private WritableSettings settings;
 
     public VaporizerCommunicator(final Context context) {
         this.context = context;

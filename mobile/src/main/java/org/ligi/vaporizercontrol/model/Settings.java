@@ -10,10 +10,4 @@ public interface Settings {
     boolean isDisplayUnitWanted();
     boolean isPreciseWanted();
 
-    void shouldDisplayUnit(final boolean should);
-    void setAutoConnectAddr(final String addr);
-    void shouldBePrecise(final boolean should);
-    void setTemperatureFormat(int format);
-
-
 }

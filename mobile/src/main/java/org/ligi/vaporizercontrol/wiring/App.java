@@ -5,11 +5,12 @@ import org.ligi.tracedroid.TraceDroid;
 import org.ligi.vaporizercontrol.model.Settings;
 import org.ligi.vaporizercontrol.model.SharedPreferencesSettings;
 import org.ligi.vaporizercontrol.model.VaporizerCommunicator;
+import org.ligi.vaporizercontrol.model.WritableSettings;
 
 public class App extends Application {
 
     private VaporizerCommunicator communicator;
-    private Settings settings;
+    private WritableSettings settings;
 
     @Override
     public void onCreate() {
@@ -24,7 +25,7 @@ public class App extends Application {
         return communicator;
     }
 
-    public Settings getSettings() {
+    public WritableSettings getSettings() {
         return settings;
     }
 }
