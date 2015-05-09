@@ -48,7 +48,7 @@ public class VaporizerCommunicator {
 
     public VaporizerCommunicator(final Context context) {
         this.context = context;
-        settings = ((App)context.getApplicationContext()).getSettings();
+        settings = ((App) context.getApplicationContext()).getSettings();
         bt = ((BluetoothManager) context.getSystemService(Activity.BLUETOOTH_SERVICE)).getAdapter();
     }
 
@@ -82,7 +82,16 @@ public class VaporizerCommunicator {
 
 
     private boolean readCharacteristic(final String uuid) {
+        if (gatt == null) {
+            return false;
+        }
+
         service = gatt.getService(UUID.fromString(SERVICE_UUID));
+
+        if (service == null) {
+            return false;
+        }
+
         return gatt.readCharacteristic(service.getCharacteristic(UUID.fromString(uuid)));
     }
 
