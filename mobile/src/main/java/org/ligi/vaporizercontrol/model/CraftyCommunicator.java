@@ -206,25 +206,26 @@ public class CraftyCommunicator implements VaporizerCommunicator {
 
     private void characteristicChange(final BluetoothGattCharacteristic characteristic) {
 
+        final Integer uint16val = characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT16, 0);
         switch (characteristic.getUuid().toString()) {
             case BATTERY_CHARACTERISTIC_UUID:
-                data.batteryPercentage = characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT16, 0);
+                data.batteryPercentage = uint16val;
                 break;
 
             case TEMPERATURE_CHARACTERISTIC_UUID:
-                data.currentTemperature = characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT16, 0);
+                data.currentTemperature = uint16val;
                 break;
 
             case TEMPERATURE_SETPOINT_CHARACTERISTIC_UUID:
-                data.setTemperature = characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT16, 0);
+                data.setTemperature = uint16val;
                 break;
 
             case TEMPERATURE_BOOST_CHARACTERISTIC_UUID:
-                data.boostTemperature = characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT16, 0);
+                data.boostTemperature = uint16val;
                 break;
 
             case LED_CHARACTERISTIC_UUID:
-                data.ledPercentage = characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT16, 0);
+                data.ledPercentage = uint16val;
                 break;
 
         }
