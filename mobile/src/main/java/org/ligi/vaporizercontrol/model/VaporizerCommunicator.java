@@ -13,17 +13,14 @@ import android.content.Context;
 import android.widget.Toast;
 import java.util.UUID;
 import org.ligi.vaporizercontrol.wiring.App;
+import static org.ligi.vaporizercontrol.model.CRAFTY_UUIDS.BATTERY_CHARACTERISTIC_UUID;
+import static org.ligi.vaporizercontrol.model.CRAFTY_UUIDS.LED_CHARACTERISTIC_UUID;
+import static org.ligi.vaporizercontrol.model.CRAFTY_UUIDS.SERVICE_UUID;
+import static org.ligi.vaporizercontrol.model.CRAFTY_UUIDS.TEMPERATURE_BOOST_CHARACTERISTIC_UUID;
+import static org.ligi.vaporizercontrol.model.CRAFTY_UUIDS.TEMPERATURE_CHARACTERISTIC_UUID;
+import static org.ligi.vaporizercontrol.model.CRAFTY_UUIDS.TEMPERATURE_SETPOINT_CHARACTERISTIC_UUID;
 
 public class VaporizerCommunicator {
-
-
-    public static final String SERVICE_UUID = "00000001-4c45-4b43-4942-265a524f5453";
-
-    public static final String TEMPERATURE_CHARACTERISTIC_UUID = "00000011-4c45-4b43-4942-265a524f5453";
-    public static final String TEMPERATURE_SETPOINT_CHARACTERISTIC_UUID = "00000021-4c45-4b43-4942-265a524f5453";
-    public static final String TEMPERATURE_BOOST_CHARACTERISTIC_UUID = "00000031-4c45-4b43-4942-265a524f5453";
-    public static final String BATTERY_CHARACTERISTIC_UUID = "00000041-4c45-4b43-4942-265a524f5453";
-    public static final String LED_CHARACTERISTIC_UUID = "00000051-4c45-4b43-4942-265a524f5453";
 
     private final BluetoothAdapter bt;
     private BluetoothGatt gatt;
