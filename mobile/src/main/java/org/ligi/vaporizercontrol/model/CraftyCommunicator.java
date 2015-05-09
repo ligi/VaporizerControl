@@ -49,6 +49,7 @@ public class CraftyCommunicator implements VaporizerCommunicator {
         bt = ((BluetoothManager) context.getSystemService(Activity.BLUETOOTH_SERVICE)).getAdapter();
     }
 
+    @Override
     public boolean isBluetoothAvailable() {
         return bt != null;
     }
@@ -66,6 +67,7 @@ public class CraftyCommunicator implements VaporizerCommunicator {
         state = State.DISCONNECTED;
     }
 
+    @Override
     public void connectAndRegisterForUpdates(VaporizerData.VaporizerUpdateListener updateListener) {
         this.updateListener = updateListener;
         if (state == State.DISCONNECTED) {
@@ -76,7 +78,6 @@ public class CraftyCommunicator implements VaporizerCommunicator {
             }
         }
     }
-
 
     private boolean readCharacteristic(final String uuid) {
         if (gatt == null) {
@@ -92,11 +93,13 @@ public class CraftyCommunicator implements VaporizerCommunicator {
         return gatt.readCharacteristic(service.getCharacteristic(UUID.fromString(uuid)));
     }
 
+    @Override
     public void setLEDBrightness(int val) {
         data.ledPercentage = val;
         setValue(LED_CHARACTERISTIC_UUID, val);
     }
 
+    @Override
     public void setBoosterTemperature(int val) {
         data.boostTemperature = val;
         setValue(TEMPERATURE_BOOST_CHARACTERISTIC_UUID, val);
@@ -120,6 +123,7 @@ public class CraftyCommunicator implements VaporizerCommunicator {
         // TODO retry on failure
     }
 
+    @Override
     public void setTemperatureSetPoint(final int temperatureSetPoint) {
         data.setTemperature = temperatureSetPoint;
         setValue(TEMPERATURE_SETPOINT_CHARACTERISTIC_UUID, temperatureSetPoint);
@@ -256,6 +260,7 @@ public class CraftyCommunicator implements VaporizerCommunicator {
         });
     }
 
+    @Override
     public VaporizerData getData() {
         return data;
     }
