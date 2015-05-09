@@ -6,8 +6,8 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import org.jetbrains.anko.*
-import org.ligi.vaporizercontrol.wiring.App
 import org.ligi.vaporizercontrol.model.Settings
+import org.ligi.vaporizercontrol.wiring.App
 
 public class SettingsActivity : AppCompatActivity() {
 
@@ -73,6 +73,13 @@ public class SettingsActivity : AppCompatActivity() {
                 setChecked(settings.isPreciseWanted())
                 onCheckedChange { compoundButton, b ->
                     settings.shouldBePrecise(b);
+                }
+            }
+
+            checkBox("poll ( only activate with old firmwares )") {
+                setChecked(settings.isPollingWanted())
+                onCheckedChange { compoundButton, b ->
+                    settings.shouldPoll(b);
                 }
             }
         }

@@ -11,5 +11,5 @@ public interface VaporizerCommunicator {
 
     boolean isBluetoothAvailable();
 
-    void connectAndRegisterForUpdates(VaporizerData.VaporizerUpdateListener dataDisplayActivity);
+    void setUpdateListener(VaporizerData.VaporizerUpdateListener dataDisplayActivity);
 }

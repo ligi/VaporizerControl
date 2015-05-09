@@ -9,7 +9,9 @@ import android.bluetooth.BluetoothGattCharacteristic;
 import android.bluetooth.BluetoothGattDescriptor;
 import android.bluetooth.BluetoothGattService;
 import android.bluetooth.BluetoothManager;
+import android.bluetooth.BluetoothProfile;
 import android.content.Context;
+import android.os.Looper;
 import android.widget.Toast;
 import java.util.UUID;
 import org.ligi.vaporizercontrol.wiring.App;
@@ -32,6 +34,7 @@ public class CraftyCommunicator implements VaporizerCommunicator {
 
     private boolean batteryNotificationEnabled = false;
     private boolean tempNotificationEnabled = false;
+    private boolean running = true;
 
     enum State {
         SCANNING,
@@ -47,6 +50,7 @@ public class CraftyCommunicator implements VaporizerCommunicator {
         this.context = context;
         settings = ((App) context.getApplicationContext()).getSettings();
         bt = ((BluetoothManager) context.getSystemService(Activity.BLUETOOTH_SERVICE)).getAdapter();
+        new Thread(new HeartBeat()).start();
     }
 
     @Override
@@ -68,15 +72,8 @@ public class CraftyCommunicator implements VaporizerCommunicator {
     }
 
     @Override
-    public void connectAndRegisterForUpdates(VaporizerData.VaporizerUpdateListener updateListener) {
+    public void setUpdateListener(VaporizerData.VaporizerUpdateListener updateListener) {
         this.updateListener = updateListener;
-        if (state == State.DISCONNECTED) {
-            if (settings.getAutoConnectMAC() != null) {
-                connect(settings.getAutoConnectMAC());
-            } else {
-                startScan();
-            }
-        }
     }
 
     private boolean readCharacteristic(final String uuid) {
@@ -151,15 +148,57 @@ public class CraftyCommunicator implements VaporizerCommunicator {
             return readCharacteristic(LED_CHARACTERISTIC_UUID);
         }
 
-        if (!batteryNotificationEnabled) {
-            return batteryNotificationEnabled = enableNotification(gatt, UUID.fromString(BATTERY_CHARACTERISTIC_UUID));
+        if (settings.isPollingWanted()) {
+            if (last_poll.equals(BATTERY_CHARACTERISTIC_UUID)) {
+                last_poll = TEMPERATURE_CHARACTERISTIC_UUID;
+                return readCharacteristic(TEMPERATURE_CHARACTERISTIC_UUID);
+            } else {
+                last_poll = BATTERY_CHARACTERISTIC_UUID;
+                return readCharacteristic(BATTERY_CHARACTERISTIC_UUID);
+            }
+        } else {
+            if (!batteryNotificationEnabled) {
+                return batteryNotificationEnabled = enableNotification(gatt, UUID.fromString(BATTERY_CHARACTERISTIC_UUID));
+            }
+
+            if (!tempNotificationEnabled) {
+                return tempNotificationEnabled = enableNotification(gatt, UUID.fromString(TEMPERATURE_CHARACTERISTIC_UUID));
+            }
         }
 
-        if (!tempNotificationEnabled) {
-            return tempNotificationEnabled = enableNotification(gatt, UUID.fromString(TEMPERATURE_CHARACTERISTIC_UUID));
-        }
+        return false;
+    }
 
-        return true;
+    String last_poll = BATTERY_CHARACTERISTIC_UUID;
+
+    private class HeartBeat implements Runnable {
+
+        @Override
+        public void run() {
+            Looper.prepare();
+            while (running) {
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+                if (state == State.DISCONNECTED) {
+                    connectOrStartScan();
+                } else {
+                    readNextCharacteristic();
+                }
+
+            }
+        }
+    }
+
+    private void connectOrStartScan() {
+        if (settings.getAutoConnectMAC() != null) {
+            connect(settings.getAutoConnectMAC());
+        } else {
+            startScan();
+        }
     }
 
 
@@ -170,35 +209,24 @@ public class CraftyCommunicator implements VaporizerCommunicator {
             @Override
             public void onConnectionStateChange(final BluetoothGatt newGatt, final int status, final int newState) {
                 super.onConnectionStateChange(newGatt, status, newState);
-                gatt = newGatt;
-                newGatt.discoverServices();
-                state = State.CONNECTED;
-            }
 
-            @Override
-            public void onServicesDiscovered(final BluetoothGatt gatt, final int status) {
-                super.onServicesDiscovered(gatt, status);
-                readNextCharacteristic();
-            }
+                if (newState == BluetoothProfile.STATE_CONNECTED) {
+                    gatt = newGatt;
+                    newGatt.discoverServices();
+                    state = State.CONNECTED;
+                }
 
+            }
             @Override
             public void onCharacteristicRead(final BluetoothGatt gatt, final BluetoothGattCharacteristic characteristic, final int status) {
                 super.onCharacteristicRead(gatt, characteristic, status);
                 characteristicChange(characteristic);
-                readNextCharacteristic();
-            }
-
-            @Override
-            public void onDescriptorWrite(final BluetoothGatt gatt, final BluetoothGattDescriptor descriptor, final int status) {
-                super.onDescriptorWrite(gatt, descriptor, status);
-                readNextCharacteristic();
             }
 
             @Override
             public void onCharacteristicChanged(final BluetoothGatt gatt, final BluetoothGattCharacteristic characteristic) {
                 super.onCharacteristicChanged(gatt, characteristic);
                 characteristicChange(characteristic);
-                readNextCharacteristic();
             }
         });
     }
@@ -227,7 +255,6 @@ public class CraftyCommunicator implements VaporizerCommunicator {
             case LED_CHARACTERISTIC_UUID:
                 data.ledPercentage = uint16val;
                 break;
-
         }
 
         if (updateListener != null) {

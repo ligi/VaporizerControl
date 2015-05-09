@@ -44,9 +44,17 @@ public class SharedPreferencesSettings implements WritableSettings {
         return getPrefs().getBoolean("precise", false);
     }
 
+    @Override
+    public boolean isPollingWanted() {
+        return getPrefs().getBoolean("polling", false);
+    }
+
+    public void shouldPoll(final boolean should) {
+        getPrefs().edit().putBoolean("polling", should).commit();
+    }
+
     public void shouldBePrecise(final boolean should) {
         getPrefs().edit().putBoolean("precise", should).commit();
     }
-
 
 }

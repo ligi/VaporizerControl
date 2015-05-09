@@ -17,11 +17,11 @@ import butterknife.OnLongClick;
 import net.i2p.android.ext.floatingactionbutton.FloatingActionsMenu;
 import net.steamcrafted.loadtoast.LoadToast;
 import org.ligi.tracedroid.sending.TraceDroidEmailSender;
-import org.ligi.vaporizercontrol.wiring.App;
 import org.ligi.vaporizercontrol.R;
 import org.ligi.vaporizercontrol.model.Settings;
 import org.ligi.vaporizercontrol.model.VaporizerData;
 import org.ligi.vaporizercontrol.util.TemperatureFormatter;
+import org.ligi.vaporizercontrol.wiring.App;
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 
@@ -121,7 +121,7 @@ public class DataDisplayActivity extends AppCompatActivity implements VaporizerD
                 }
             }, 1000);
         } else {
-            getApp().getVaporizerCommunicator().connectAndRegisterForUpdates(this);
+            getApp().getVaporizerCommunicator().setUpdateListener(this);
         }
         onUpdate(getApp().getVaporizerCommunicator().getData());
     }

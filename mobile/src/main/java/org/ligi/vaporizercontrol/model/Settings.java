@@ -10,4 +10,5 @@ public interface Settings {
     boolean isDisplayUnitWanted();
     boolean isPreciseWanted();
 
+    boolean isPollingWanted();
 }
