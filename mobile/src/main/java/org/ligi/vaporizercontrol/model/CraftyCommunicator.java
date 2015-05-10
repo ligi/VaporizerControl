@@ -194,6 +194,10 @@ public class CraftyCommunicator implements VaporizerCommunicator {
     }
 
     private void connectOrStartScan() {
+        if (!isBluetoothAvailable()) {
+            return;
+        }
+
         if (settings.getAutoConnectMAC() != null) {
             connect(settings.getAutoConnectMAC());
         } else {
