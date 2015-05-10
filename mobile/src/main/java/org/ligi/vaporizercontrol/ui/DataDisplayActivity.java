@@ -14,6 +14,8 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 import butterknife.OnLongClick;
+import fr.nicolaspomepuy.discreetapprate.AppRate;
+import fr.nicolaspomepuy.discreetapprate.RetryPolicy;
 import net.i2p.android.ext.floatingactionbutton.FloatingActionsMenu;
 import net.steamcrafted.loadtoast.LoadToast;
 import org.ligi.tracedroid.sending.TraceDroidEmailSender;
@@ -99,6 +101,8 @@ public class DataDisplayActivity extends AppCompatActivity implements VaporizerD
 
         setContentView(R.layout.activity_main);
         ButterKnife.inject(this);
+
+        AppRate.with(this).retryPolicy(RetryPolicy.EXPONENTIAL).initialLaunchCount(5).checkAndShow();
 
         loadToast = new LoadToast(this);
 

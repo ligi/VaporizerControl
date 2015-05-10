@@ -40,6 +40,8 @@ dependencies {
 
     compile 'org.ligi:tracedroid:1.4'
 
+    compile 'fr.nicolaspomepuy:discreetapprate:2.0.4@aar'
+
 
     testCompile('com.squareup.assertj:assertj-android:1.0.0') {
         exclude group: 'com.android.support'
