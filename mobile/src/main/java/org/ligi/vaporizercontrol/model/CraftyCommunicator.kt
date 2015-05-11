@@ -201,7 +201,7 @@ public class CraftyCommunicator(private val context: Context) : VaporizerCommuni
 
     private fun connect(addr: String) {
         state = State.CONNECTING
-        settings.setAutoConnectAddr(addr)
+        settings.setAutoConnectMAC(addr)
         bt!!.getRemoteDevice(addr).connectGatt(context, true, object : BluetoothGattCallback() {
             override fun onConnectionStateChange(newGatt: BluetoothGatt?, status: Int, newState: Int) {
                 super.onConnectionStateChange(newGatt, status, newState)

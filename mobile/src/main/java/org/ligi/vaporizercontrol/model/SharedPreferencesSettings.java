@@ -28,8 +28,8 @@ public class SharedPreferencesSettings implements WritableSettings {
         return getPrefs().getString("addr", null);
     }
 
-    public void setAutoConnectAddr(final String addr) {
-        getPrefs().edit().putString("addr", addr).commit();
+    public void setAutoConnectMAC(final String mac) {
+        getPrefs().edit().putString("addr", mac).commit();
     }
 
     public boolean isDisplayUnitWanted() {

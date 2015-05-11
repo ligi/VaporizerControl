@@ -56,7 +56,7 @@ public class SettingsActivity : AppCompatActivity() {
                 button("remove " + mac + " as default") {
                     onClick {
                         setVisibility(View.GONE)
-                        settings.setAutoConnectAddr(null);
+                        settings.setAutoConnectMAC(null);
                         Toast.makeText(getContext(), "done", Toast.LENGTH_LONG).show();
                     }
                 }
