@@ -73,9 +73,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/fam"
-
             fab:fab_labelStyle="@style/menu_labels_style"
-
             fab:fab_icon="@drawable/ic_action_edit"
             fab:fab_colorNormal="@color/accent"
             fab:fab_title="Boost temperature"
