@@ -3,6 +3,7 @@ package org.ligi.vaporizercontrol.ui;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
@@ -140,6 +141,10 @@ public class DataDisplayActivity extends AppCompatActivity implements VaporizerD
             case R.id.action_settings:
                 startActivity(new Intent(this, SettingsActivity.class));
                 break;
+            case R.id.action_help:
+                new AlertDialog.Builder(this).setView(new HelpViewProvider().getView(this)).setTitle("Information").setPositiveButton("OK", null).show();
+                break;
+
         }
         return super.onOptionsItemSelected(item);
     }

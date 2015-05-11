@@ -243,6 +243,12 @@ public class CraftyCommunicator(private val context: Context) : VaporizerCommuni
             LED_CHARACTERISTIC_UUID -> data.ledPercentage = characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT16, 0)
 
             VERSION_UUID -> data.version = characteristic.getStringValue(0)
+
+            MODEL_UUID -> data.model = characteristic.getStringValue(0)
+
+            SERIAL_UUID -> data.serial = characteristic.getStringValue(0);
+
+            HOURS_OF_OP_UUID -> data.hoursOfOperation = characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT16, 0)
         }
 
         if (updateListener != null) {

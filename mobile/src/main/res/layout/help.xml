@@ -1,0 +1,94 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              android:padding="16dp">
+
+    <TableLayout
+            android:layout_gravity="center_horizontal"
+            android:paddingBottom="16dp"
+            android:layout_width="wrap_content" android:layout_height="wrap_content">
+
+        <TableRow>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Model:"
+                    android:fontFamily="sans-serif-light"
+                    android:paddingRight="8dp"
+                    />
+
+            <TextView
+                    android:id="@+id/model"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif"
+                    tools:text="Crafty"/>
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-light"
+                    android:text="Version:"
+                    android:paddingRight="8dp"
+                    />
+
+            <TextView
+                    android:id="@+id/version"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif"
+                    tools:text="V2.05"/>
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-light"
+                    android:text="Serial:"
+                    android:paddingRight="8dp"
+                    />
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/serial"
+                    android:fontFamily="sans-serif"
+                    tools:text="YA0123"/>
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-light"
+                    android:text="Hours:"
+                    android:paddingRight="8dp"
+                    />
+
+            <TextView
+                    android:id="@+id/hours"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif"
+                    tools:text="23"/>
+        </TableRow>
+
+    </TableLayout>
+
+    <TextView
+            android:id="@+id/help"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif"
+            tools:text="23"/>
+
+</LinearLayout>

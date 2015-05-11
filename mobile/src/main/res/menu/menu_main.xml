@@ -2,18 +2,17 @@
       xmlns:app="http://schemas.android.com/apk/res-auto"
       xmlns:tools="http://schemas.android.com/tools"
       tools:context=".MainActivity">
-    <!--
     <item
             android:id="@+id/action_help"
             android:title="help"
+            android:icon="@drawable/ic_action_info_outline"
             android:orderInCategory="100"
-            app:showAsAction="never"/>
-    -->
+            app:showAsAction="ifRoom"/>
 
     <item
             android:id="@+id/action_settings"
             android:title="settings"
             android:icon="@drawable/ic_action_settings"
-            android:orderInCategory="100"
+            android:orderInCategory="101"
             app:showAsAction="ifRoom"/>
 </menu>
