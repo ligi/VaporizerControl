@@ -13,6 +13,14 @@ public class VaporizerData {
     public Integer boostTemperature;
     @Nullable
     public Integer ledPercentage;
+    @Nullable
+    public String model;
+    @Nullable
+    public String version;
+    @Nullable
+    public String serial;
+    @Nullable
+    public Integer hoursOfOperation;
 
     public interface VaporizerUpdateListener {
         void onUpdate(VaporizerData data);
