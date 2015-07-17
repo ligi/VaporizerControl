@@ -12,7 +12,9 @@ android {
         targetSdkVersion 22
         versionCode 18
         versionName "1.8"
+        archivesBaseName = "VaporizerControl-$versionName"
     }
+        
     buildTypes {
         release {
             minifyEnabled false
