@@ -24,19 +24,19 @@ android {
 dependencies {
     compile 'com.jakewharton:butterknife:6.1.0'
 
-    compile 'net.steamcrafted:load-toast:1.0.5'
+    compile 'net.steamcrafted:load-toast:1.0.8'
     //wearApp project(':wear')
 
-    compile 'com.android.support:appcompat-v7:22.1.1'
+    compile 'com.android.support:appcompat-v7:22.2.0'
 
     compile 'net.i2p.android.ext:floatingactionbutton:1.9.0'
 
     compile 'com.acappelli:discreteSeekBar:1.0'
     compile 'org.ligi:AXT:0.33'
 
-    compile 'org.jetbrains.anko:anko:0.6-15s'
-    compile 'org.jetbrains.kotlin:kotlin-stdlib:0.11.91.4'
-    compile 'org.jetbrains.kotlin:kotlin-runtime:0.11.91.4'
+    compile 'org.jetbrains.anko:anko:0.6.3-15s'
+    compile 'org.jetbrains.kotlin:kotlin-stdlib:0.12.613'
+    compile 'org.jetbrains.kotlin:kotlin-runtime:0.12.613'
 
     compile 'org.ligi:tracedroid:1.4'
 

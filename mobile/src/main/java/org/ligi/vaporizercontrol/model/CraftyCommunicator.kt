@@ -21,16 +21,16 @@ public class CraftyCommunicator(private val context: Context) : VaporizerCommuni
     private val running = true
 
     enum class State {
-        SCANNING
-        CONNECTING
-        CONNECTED
+        SCANNING,
+        CONNECTING,
+        CONNECTED,
         DISCONNECTED
     }
 
     private var state = State.DISCONNECTED
     private val settings: WritableSettings
 
-    {
+    init {
         settings = (context.getApplicationContext() as App).getSettings()
         bt = (context.getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager).getAdapter()
         Thread(HeartBeat()).start()
