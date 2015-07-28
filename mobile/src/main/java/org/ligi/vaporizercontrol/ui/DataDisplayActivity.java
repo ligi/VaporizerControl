@@ -11,8 +11,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import butterknife.OnClick;
 import butterknife.OnLongClick;
 import fr.nicolaspomepuy.discreetapprate.AppRate;
@@ -30,8 +30,26 @@ import static android.view.View.VISIBLE;
 
 public class DataDisplayActivity extends AppCompatActivity implements VaporizerData.VaporizerUpdateListener {
 
-    @InjectView(R.id.intro_text)
+    @Bind(R.id.intro_text)
     TextView introText;
+
+    @Bind(R.id.battery)
+    TextView battery;
+
+    @Bind(R.id.temperature)
+    TextView temperature;
+
+    @Bind(R.id.temperatureSetPoint)
+    TextView temperatureSetPoint;
+
+    @Bind(R.id.tempBoost)
+    TextView tempBoost;
+
+    @Bind(R.id.led)
+    TextView led;
+
+    @Bind(R.id.fam)
+    FloatingActionsMenu fam;
 
     private LoadToast loadToast;
 
@@ -53,24 +71,6 @@ public class DataDisplayActivity extends AppCompatActivity implements VaporizerD
     void onTemperatureClick() {
         ChangeDialogs.showTemperatureDialog(this, getApp().getVaporizerCommunicator());
     }
-
-    @InjectView(R.id.battery)
-    TextView battery;
-
-    @InjectView(R.id.temperature)
-    TextView temperature;
-
-    @InjectView(R.id.temperatureSetPoint)
-    TextView temperatureSetPoint;
-
-    @InjectView(R.id.tempBoost)
-    TextView tempBoost;
-
-    @InjectView(R.id.led)
-    TextView led;
-
-    @InjectView(R.id.fam)
-    FloatingActionsMenu fam;
 
     @OnClick(R.id.fab)
     void onFAMClick() {
@@ -101,7 +101,7 @@ public class DataDisplayActivity extends AppCompatActivity implements VaporizerD
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
 
         AppRate.with(this).retryPolicy(RetryPolicy.EXPONENTIAL).initialLaunchCount(5).checkAndShow();
 

@@ -6,27 +6,27 @@ import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import org.ligi.vaporizercontrol.R;
 import org.ligi.vaporizercontrol.model.VaporizerData;
 import org.ligi.vaporizercontrol.wiring.App;
 
 public class HelpViewProvider {
 
-    @InjectView(R.id.serial)
+    @Bind(R.id.serial)
     TextView serial;
 
-    @InjectView(R.id.model)
+    @Bind(R.id.model)
     TextView model;
 
-    @InjectView(R.id.version)
+    @Bind(R.id.version)
     TextView version;
 
-    @InjectView(R.id.hours)
+    @Bind(R.id.hours)
     TextView hours;
 
-    @InjectView(R.id.help)
+    @Bind(R.id.help)
     TextView help;
 
     public View getView(Context ctx) {
@@ -35,7 +35,7 @@ public class HelpViewProvider {
 
         final View view = LayoutInflater.from(ctx).inflate(R.layout.help, null);
 
-        ButterKnife.inject(this, view);
+        ButterKnife.bind(this, view);
 
         serial.setText(data.serial);
         model.setText(data.model);
