@@ -69,7 +69,7 @@ public class SettingsActivity : AppCompatActivity() {
                 }
             }
 
-            checkBox("show rlly precise"){
+            checkBox("show rlly precise") {
                 setChecked(settings.isPreciseWanted())
                 onCheckedChange { compoundButton, b ->
                     settings.shouldBePrecise(b);

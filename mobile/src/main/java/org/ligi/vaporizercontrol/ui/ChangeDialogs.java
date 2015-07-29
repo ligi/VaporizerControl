@@ -15,10 +15,10 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 import org.adw.library.widgets.discreteseekbar.DiscreteSeekBar;
-import org.ligi.vaporizercontrol.wiring.App;
 import org.ligi.vaporizercontrol.model.Settings;
 import org.ligi.vaporizercontrol.model.VaporizerCommunicator;
 import org.ligi.vaporizercontrol.util.TemperatureFormatter;
+import org.ligi.vaporizercontrol.wiring.App;
 
 public class ChangeDialogs {
 
@@ -79,7 +79,7 @@ public class ChangeDialogs {
 
     public static void showTemperatureDialog(final Context ctx, final VaporizerCommunicator comm) {
 
-        final Settings settings=((App)ctx.getApplicationContext()).getSettings();
+        final Settings settings = ((App) ctx.getApplicationContext()).getSettings();
 
         final ScrollView scrollView = new ScrollView(ctx);
         scrollView.setLayoutParams(new ScrollView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
@@ -117,7 +117,8 @@ public class ChangeDialogs {
             grp.addView(button);
             grp.addView(txt);
             lin.addView(grp);
-        } scrollView.addView(lin);
+        }
+        scrollView.addView(lin);
 
         new AlertDialog.Builder(ctx).setView(scrollView).setMessage("Set Temperature").setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override

@@ -6,8 +6,11 @@ public interface Settings {
     int TEMPERATURE_KELVIN = 2;
 
     int getTemperatureFormat();
+
     String getAutoConnectMAC();
+
     boolean isDisplayUnitWanted();
+
     boolean isPreciseWanted();
 
     boolean isPollingWanted();

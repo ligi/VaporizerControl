@@ -1,7 +1,5 @@
 package org.ligi.vaporizercontrol.util
 
-import android.content.Context
-import org.ligi.vaporizercontrol.wiring.App
 import org.ligi.vaporizercontrol.model.Settings
 
 public class TemperatureFormatter {
