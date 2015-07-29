@@ -81,7 +81,7 @@ public class CraftyCommunicator(private val context: Context) : VaporizerCommuni
         setValue(TEMPERATURE_BOOST_CHARACTERISTIC_UUID, `val`)
     }
 
-    private fun setValue(uuid: String, `val`: Int) {
+    private fun setValue(uuid: String, value: Int) {
         if (gatt == null) {
             return
         }
@@ -93,7 +93,7 @@ public class CraftyCommunicator(private val context: Context) : VaporizerCommuni
         }
 
         val characteristic = service.getCharacteristic(UUID.fromString(uuid))
-        characteristic.setValue(`val`, BluetoothGattCharacteristic.FORMAT_UINT16, 0)
+        characteristic.setValue(value, BluetoothGattCharacteristic.FORMAT_UINT16, 0)
         gatt!!.writeCharacteristic(characteristic)
         updateListener!!.onUpdate(data)
         // TODO retry on failure
