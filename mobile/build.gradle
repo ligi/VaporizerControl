@@ -3,8 +3,8 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 
 android {
-    compileSdkVersion 22
-    buildToolsVersion "22.0.1"
+    compileSdkVersion 23
+    buildToolsVersion "23.0.1"
 
     defaultConfig {
         applicationId "org.ligi.vaporizercontrol"
@@ -29,16 +29,16 @@ dependencies {
     compile 'net.steamcrafted:load-toast:1.0.8'
     //wearApp project(':wear')
 
-    compile 'com.android.support:appcompat-v7:22.2.1'
+    compile 'com.android.support:appcompat-v7:23.0.1'
 
     compile 'net.i2p.android.ext:floatingactionbutton:1.10.0'
 
     compile 'com.acappelli:discreteSeekBar:1.0'
-    compile 'org.ligi:AXT:0.33'
+    compile 'org.ligi:AXT:0.35'
 
-    compile 'org.jetbrains.anko:anko:0.6.3-15s'
-    compile 'org.jetbrains.kotlin:kotlin-stdlib:0.12.1218'
-    compile 'org.jetbrains.kotlin:kotlin-runtime:0.12.1218'
+    compile 'org.jetbrains.anko:anko-sdk15:0.7'
+    compile 'org.jetbrains.kotlin:kotlin-stdlib:0.13.1514'
+    compile 'org.jetbrains.kotlin:kotlin-runtime:0.13.1514'
 
     compile 'org.ligi:tracedroid:1.4'
 
@@ -47,4 +47,5 @@ dependencies {
     testCompile('com.squareup.assertj:assertj-android:1.1.0')
     testCompile 'junit:junit:4.12'
     testCompile 'org.mockito:mockito-core:2.0.31-beta'
+    testCompile 'com.android.support:support-annotations:23.0.1'
 }

@@ -68,7 +68,9 @@ public class CraftyCommunicator(private val context: Context) : VaporizerCommuni
             return false
         }
 
-        return gatt!!.readCharacteristic(service!!.getCharacteristic(UUID.fromString(characteristicUUID)))
+        val characteristic = service!!.getCharacteristic(UUID.fromString(characteristicUUID)) ?: return false
+
+        return gatt!!.readCharacteristic(characteristic)
     }
 
     override fun setLEDBrightness(`val`: Int) {
