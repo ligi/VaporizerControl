@@ -31,8 +31,8 @@ public class CraftyCommunicator(private val context: Context) : VaporizerCommuni
     private val settings: WritableSettings
 
     init {
-        settings = (context.getApplicationContext() as App).getSettings()
-        bt = (context.getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager).getAdapter()
+        settings = (context.applicationContext as App).settings
+        bt = (context.getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager).adapter
         Thread(HeartBeat()).start()
     }
 
@@ -141,7 +141,7 @@ public class CraftyCommunicator(private val context: Context) : VaporizerCommuni
                 return readCharacteristic(MISC_DATA_UUID, HOURS_OF_OP_UUID)
         }
 
-        if (settings.isPollingWanted()) {
+        if (settings.isPollingWanted) {
             if (last_poll == BATTERY_CHARACTERISTIC_UUID) {
                 last_poll = TEMPERATURE_CHARACTERISTIC_UUID
                 return readCharacteristic(DATA_SERVICE_UUID, TEMPERATURE_CHARACTERISTIC_UUID)
@@ -193,8 +193,8 @@ public class CraftyCommunicator(private val context: Context) : VaporizerCommuni
             return
         }
 
-        if (settings.getAutoConnectMAC() != null) {
-            connect(settings.getAutoConnectMAC())
+        if (settings.autoConnectMAC != null) {
+            connect(settings.autoConnectMAC)
         } else {
             startScan()
         }
@@ -203,7 +203,7 @@ public class CraftyCommunicator(private val context: Context) : VaporizerCommuni
 
     private fun connect(addr: String) {
         state = State.CONNECTING
-        settings.setAutoConnectMAC(addr)
+        settings.autoConnectMAC = addr
         bt!!.getRemoteDevice(addr).connectGatt(context, true, object : BluetoothGattCallback() {
             override fun onConnectionStateChange(newGatt: BluetoothGatt?, status: Int, newState: Int) {
                 super.onConnectionStateChange(newGatt, status, newState)
@@ -262,7 +262,7 @@ public class CraftyCommunicator(private val context: Context) : VaporizerCommuni
         service = gatt!!.getService(UUID.fromString(DATA_SERVICE_UUID))
         val ledChar = service!!.getCharacteristic(enableCharacteristicFromUUID)
         gatt.setCharacteristicNotification(ledChar, true)
-        val descriptor = ledChar.getDescriptors().get(0)
+        val descriptor = ledChar.descriptors.get(0)
         descriptor.setValue(BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE)
         if (!gatt.writeDescriptor(descriptor)) {
             Toast.makeText(context, "Could not write descriptor for notification", Toast.LENGTH_LONG).show()
@@ -275,9 +275,9 @@ public class CraftyCommunicator(private val context: Context) : VaporizerCommuni
         state = State.SCANNING
         bt!!.startLeScan(object : BluetoothAdapter.LeScanCallback {
             override fun onLeScan(device: BluetoothDevice, rssi: Int, scanRecord: ByteArray) {
-                if (state == State.SCANNING && device.getName() != null && device.getName() == "STORZ&BICKEL") {
+                if (state == State.SCANNING && device.name != null && device.name == "STORZ&BICKEL") {
                     bt.stopLeScan(null)
-                    connect(device.getAddress())
+                    connect(device.address)
                 }
             }
         })

@@ -37,8 +37,8 @@ dependencies {
     compile 'org.ligi:AXT:0.35'
 
     compile 'org.jetbrains.anko:anko-sdk15:0.7'
-    compile 'org.jetbrains.kotlin:kotlin-stdlib:0.13.1514'
-    compile 'org.jetbrains.kotlin:kotlin-runtime:0.13.1514'
+    compile 'org.jetbrains.kotlin:kotlin-stdlib:0.14.449'
+    compile 'org.jetbrains.kotlin:kotlin-runtime:0.14.449'
 
     compile 'org.ligi:tracedroid:1.4'
 

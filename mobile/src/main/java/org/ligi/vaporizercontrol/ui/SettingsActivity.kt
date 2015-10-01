@@ -12,72 +12,72 @@ import org.ligi.vaporizercontrol.wiring.App
 public class SettingsActivity : AppCompatActivity() {
 
     fun getApp(): App {
-        return getApplicationContext() as App;
+        return applicationContext as App;
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val settings = getApp().getSettings()
-        val mac = settings.getAutoConnectMAC()
+        val settings = getApp().settings
+        val mac = settings.autoConnectMAC
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        supportActionBar.setDisplayHomeAsUpEnabled(true);
 
         verticalLayout {
             radioGroup() {
                 radioButton() {
-                    setText("Celsius")
+                    text = "Celsius"
                     onClick {
-                        settings.setTemperatureFormat(Settings.TEMPERATURE_CELSIUS)
+                        settings.temperatureFormat = Settings.TEMPERATURE_CELSIUS
                     }
                     id = Settings.TEMPERATURE_CELSIUS;
                 }
 
                 radioButton() {
-                    setText("Fahrenheit")
+                    text = "Fahrenheit"
                     onClick {
-                        settings.setTemperatureFormat(Settings.TEMPERATURE_FAHRENHEIT)
+                        settings.temperatureFormat = Settings.TEMPERATURE_FAHRENHEIT
                     }
                     id = Settings.TEMPERATURE_FAHRENHEIT;
                 }
 
                 radioButton() {
-                    setText("Kelvin")
+                    text = "Kelvin"
                     onClick {
-                        settings.setTemperatureFormat(Settings.TEMPERATURE_KELVIN)
+                        settings.temperatureFormat = Settings.TEMPERATURE_KELVIN
                     }
                     id = Settings.TEMPERATURE_KELVIN;
                 }
 
 
-            }.check(settings.getTemperatureFormat())
+            }.check(settings.temperatureFormat)
 
-            if (settings.getAutoConnectMAC() != null) {
-                button("remove " + mac + " as default") {
+            if (settings.autoConnectMAC != null) {
+                button("remove $mac as default") {
                     onClick {
-                        setVisibility(View.GONE)
-                        settings.setAutoConnectMAC(null);
-                        Toast.makeText(getContext(), "done", Toast.LENGTH_LONG).show();
+                        visibility = View.GONE
+                        settings.autoConnectMAC = null;
+                        Toast.makeText(context, "done", Toast.LENGTH_LONG).show();
                     }
                 }
             }
 
             checkBox("display unit") {
-                setChecked(settings.isDisplayUnitWanted())
+                isChecked = settings.isDisplayUnitWanted
                 onCheckedChange { compoundButton, b ->
                     settings.shouldDisplayUnit(b);
                 }
             }
 
             checkBox("show rlly precise") {
-                setChecked(settings.isPreciseWanted())
+                isChecked = settings.isPreciseWanted
                 onCheckedChange { compoundButton, b ->
                     settings.shouldBePrecise(b);
                 }
             }
 
             checkBox("poll ( only activate with old firmwares )") {
-                setChecked(settings.isPollingWanted())
+                isChecked = settings.isPollingWanted
                 onCheckedChange { compoundButton, b ->
                     settings.shouldPoll(b);
                 }
