@@ -1,10 +1,14 @@
 buildscript {
+    ext {
+        kotlin_version = '1.0.0-beta-2422'
+    }
+
     repositories {
         jcenter()
     }
     dependencies {
         classpath 'com.jakewharton.sdkmanager:gradle-plugin:0.12.0'
-        classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.0.0-beta-1103'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath 'com.android.tools.build:gradle:1.3.1'
     }
 }
