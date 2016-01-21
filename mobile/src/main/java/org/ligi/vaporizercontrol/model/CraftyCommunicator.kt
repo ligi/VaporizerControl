@@ -189,7 +189,7 @@ public class CraftyCommunicator(private val context: Context) : VaporizerCommuni
     }
 
     private fun connectOrStartScan() {
-        if (!isBluetoothAvailable()) {
+        if (!isBluetoothAvailable) {
             return
         }
 
@@ -231,7 +231,7 @@ public class CraftyCommunicator(private val context: Context) : VaporizerCommuni
 
     private fun characteristicChange(characteristic: BluetoothGattCharacteristic) {
 
-        when (characteristic.getUuid().toString()) {
+        when (characteristic.uuid.toString()) {
             BATTERY_CHARACTERISTIC_UUID -> {
                 data.batteryPercentage = characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT16, 0)
             }
@@ -273,12 +273,10 @@ public class CraftyCommunicator(private val context: Context) : VaporizerCommuni
 
     private fun startScan() {
         state = State.SCANNING
-        bt!!.startLeScan(object : BluetoothAdapter.LeScanCallback {
-            override fun onLeScan(device: BluetoothDevice, rssi: Int, scanRecord: ByteArray) {
-                if (state == State.SCANNING && device.name != null && device.name == "STORZ&BICKEL") {
-                    bt.stopLeScan(null)
-                    connect(device.address)
-                }
+        bt!!.startLeScan({ device, rssi, scanRecord ->
+            if (state == State.SCANNING && device.name != null && device.name == "STORZ&BICKEL") {
+                bt.stopLeScan(null)
+                connect(device.address)
             }
         })
     }
