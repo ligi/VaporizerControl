@@ -21,6 +21,7 @@ import net.i2p.android.ext.floatingactionbutton.FloatingActionsMenu;
 import net.steamcrafted.loadtoast.LoadToast;
 import org.ligi.tracedroid.sending.TraceDroidEmailSender;
 import org.ligi.vaporizercontrol.R;
+import org.ligi.vaporizercontrol.VaporizerDataBinder;
 import org.ligi.vaporizercontrol.model.Settings;
 import org.ligi.vaporizercontrol.model.VaporizerData;
 import org.ligi.vaporizercontrol.util.TemperatureFormatter;
@@ -32,21 +33,6 @@ public class DataDisplayActivity extends AppCompatActivity implements VaporizerD
 
     @Bind(R.id.intro_text)
     TextView introText;
-
-    @Bind(R.id.battery)
-    TextView battery;
-
-    @Bind(R.id.temperature)
-    TextView temperature;
-
-    @Bind(R.id.temperatureSetPoint)
-    TextView temperatureSetPoint;
-
-    @Bind(R.id.tempBoost)
-    TextView tempBoost;
-
-    @Bind(R.id.led)
-    TextView led;
 
     @Bind(R.id.fam)
     FloatingActionsMenu fam;
@@ -164,12 +150,6 @@ public class DataDisplayActivity extends AppCompatActivity implements VaporizerD
                     }
                 }
 
-                battery.setText((data.batteryPercentage == null ? "?" : "" + data.batteryPercentage) + "%");
-                final Settings settings = getApp().getSettings();
-                temperature.setText(TemperatureFormatter.Companion.getFormattedTemp(settings, data.currentTemperature, true) + " / ");
-                temperatureSetPoint.setText(TemperatureFormatter.Companion.getFormattedTemp(settings, data.setTemperature, true));
-                tempBoost.setText("+" + TemperatureFormatter.Companion.getFormattedTemp(settings, data.boostTemperature, false));
-                led.setText((data.ledPercentage == null ? "?" : "" + data.ledPercentage) + "%");
             }
         });
     }

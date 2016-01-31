@@ -1,4 +1,4 @@
-apply plugin: 'com.android.application'
+apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 
 android {
@@ -6,9 +6,8 @@ android {
     buildToolsVersion "23.0.2"
 
     defaultConfig {
-        applicationId "org.ligi.vaporizercontrol"
-        minSdkVersion 20
-        targetSdkVersion 22
+        minSdkVersion 18
+        targetSdkVersion 23
         versionCode 1
         versionName "1.0"
     }
@@ -21,15 +20,9 @@ android {
 }
 
 dependencies {
-    compile 'com.google.android.support:wearable:1.1.0'
-
-    compile 'com.jakewharton:butterknife:7.0.0'
-
-    compile 'com.google.android.support:wearable:1.1.0'
-    compile 'com.google.android.gms:play-services-wearable:8.4.0'
+    testCompile 'junit:junit:4.12'
+    compile 'com.android.support:appcompat-v7:23.1.1'
 
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     compile "org.jetbrains.kotlin:kotlin-runtime:$kotlin_version"
-
-    compile project(path: ':core')
 }

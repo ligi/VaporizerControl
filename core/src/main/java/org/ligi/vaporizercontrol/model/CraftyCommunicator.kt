@@ -5,10 +5,9 @@ import android.content.Context
 import android.os.Looper
 import android.widget.Toast
 import org.ligi.vaporizercontrol.model.CRAFTY_UUIDS.*
-import org.ligi.vaporizercontrol.wiring.App
-import java.util.UUID
+import java.util.*
 
-public class CraftyCommunicator(private val context: Context) : VaporizerCommunicator {
+public class CraftyCommunicator(private val context: Context,private val settings: WritableSettings) : VaporizerCommunicator {
 
     private val bt: BluetoothAdapter?
     private var gatt: BluetoothGatt? = null
@@ -28,10 +27,9 @@ public class CraftyCommunicator(private val context: Context) : VaporizerCommuni
     }
 
     private var state = State.DISCONNECTED
-    private val settings: WritableSettings
+
 
     init {
-        settings = (context.applicationContext as App).settings
         bt = (context.getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager).adapter
         Thread(HeartBeat()).start()
     }
