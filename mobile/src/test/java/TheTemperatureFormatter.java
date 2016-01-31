@@ -22,37 +22,37 @@ public class TheTemperatureFormatter {
 
     @Test
     public void testThatDegreesNoUnitNotPreciseWorks() {
-        assertThat(TemperatureFormatter.Companion.getFormattedTemp(settings, 231, true)).isEqualTo("23");
+        assertThat(TemperatureFormatter.INSTANCE.getFormattedTemp(settings, 231, true)).isEqualTo("23");
     }
 
     @Test
     public void testThatDegreesUnitNotPreciseWorks() {
         when(settings.isDisplayUnitWanted()).thenReturn(true);
-        assertThat(TemperatureFormatter.Companion.getFormattedTemp(settings, 231, true)).isEqualTo("23 °C");
+        assertThat(TemperatureFormatter.INSTANCE.getFormattedTemp(settings, 231, true)).isEqualTo("23 °C");
     }
 
     @Test
     public void testThatDegreesUnitPreciseWorks() {
         when(settings.isDisplayUnitWanted()).thenReturn(true);
         when(settings.isPreciseWanted()).thenReturn(true);
-        assertThat(TemperatureFormatter.Companion.getFormattedTemp(settings, 235, true)).isEqualTo("23.5 °C");
+        assertThat(TemperatureFormatter.INSTANCE.getFormattedTemp(settings, 235, true)).isEqualTo("23.5 °C");
     }
 
 
     @Test
     public void testThatFahrenheitWorks() {
         when(settings.getTemperatureFormat()).thenReturn(Settings.TEMPERATURE_FAHRENHEIT);
-        assertThat(TemperatureFormatter.Companion.getFormattedTemp(settings, 231, true)).isEqualTo("74");
+        assertThat(TemperatureFormatter.INSTANCE.getFormattedTemp(settings, 231, true)).isEqualTo("74");
     }
 
     @Test
     public void testThatKelvinWorks() {
         when(settings.getTemperatureFormat()).thenReturn(Settings.TEMPERATURE_KELVIN);
-        assertThat(TemperatureFormatter.Companion.getFormattedTemp(settings, 231, true)).isEqualTo("296");
+        assertThat(TemperatureFormatter.INSTANCE.getFormattedTemp(settings, 231, true)).isEqualTo("296");
     }
 
     @Test
     public void testThatQuestionMarkWorks() {
-        assertThat(TemperatureFormatter.Companion.getFormattedTemp(settings, null, true)).isEqualTo("?");
+        assertThat(TemperatureFormatter.INSTANCE.getFormattedTemp(settings, null, true)).isEqualTo("?");
     }
 }

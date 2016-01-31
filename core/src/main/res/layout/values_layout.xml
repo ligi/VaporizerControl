@@ -1,0 +1,56 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/temperature"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif"
+        android:textSize="@dimen/large_text"
+        tools:text="temp" />
+
+    <TextView
+        android:id="@+id/temperatureSetPoint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/temperature"
+        android:fontFamily="sans-serif"
+        android:textSize="@dimen/small_text"
+        tools:text="temp" />
+
+    <TextView
+        android:id="@+id/tempBoost"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/temperatureSetPoint"
+        android:layout_toRightOf="@id/temperature"
+        android:fontFamily="sans-serif"
+        android:textSize="@dimen/small_text"
+        tools:text="tempSetPoint" />
+
+    <TextView
+        android:id="@+id/battery"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/temperature"
+        android:drawableLeft="@drawable/ic_action_plug_dark"
+        android:fontFamily="sans-serif"
+        android:textSize="@dimen/small_text"
+        tools:text="temp" />
+
+
+    <TextView
+        android:id="@+id/led"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/temperature"
+        android:layout_toRightOf="@id/temperature"
+        android:drawableLeft="@drawable/ic_action_bulb_dark"
+        android:fontFamily="sans-serif"
+        android:singleLine="true"
+        android:textSize="@dimen/small_text"
+        tools:text="100%" />
+</RelativeLayout>

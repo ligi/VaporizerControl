@@ -16,7 +16,7 @@ public class App extends Application {
     public void onCreate() {
         TraceDroid.init(this);
         settings = new SharedPreferencesSettings(this);
-        communicator = new CraftyCommunicator(this);
+        communicator = new CraftyCommunicator(this,settings);
 
         super.onCreate();
     }

@@ -107,7 +107,7 @@ public class ChangeDialogs {
             txt.setMovementMethod(new LinkMovementMethod());
 
             final Button button = new Button(ctx);
-            button.setText(TemperatureFormatter.Companion.getFormattedTemp(settings, temperatureSetting.temp, true));
+            button.setText(TemperatureFormatter.INSTANCE.getFormattedTemp(settings, temperatureSetting.temp, true));
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(final View v) {

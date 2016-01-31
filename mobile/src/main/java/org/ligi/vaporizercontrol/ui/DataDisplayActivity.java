@@ -9,22 +9,26 @@ import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import net.i2p.android.ext.floatingactionbutton.FloatingActionsMenu;
+import net.steamcrafted.loadtoast.LoadToast;
+
+import org.ligi.tracedroid.sending.TraceDroidEmailSender;
+import org.ligi.vaporizercontrol.R;
+import org.ligi.vaporizercontrol.VaporizerDataBinder;
+import org.ligi.vaporizercontrol.model.VaporizerData;
+import org.ligi.vaporizercontrol.wiring.App;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnLongClick;
 import fr.nicolaspomepuy.discreetapprate.AppRate;
 import fr.nicolaspomepuy.discreetapprate.RetryPolicy;
-import net.i2p.android.ext.floatingactionbutton.FloatingActionsMenu;
-import net.steamcrafted.loadtoast.LoadToast;
-import org.ligi.tracedroid.sending.TraceDroidEmailSender;
-import org.ligi.vaporizercontrol.R;
-import org.ligi.vaporizercontrol.model.Settings;
-import org.ligi.vaporizercontrol.model.VaporizerData;
-import org.ligi.vaporizercontrol.util.TemperatureFormatter;
-import org.ligi.vaporizercontrol.wiring.App;
+
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 
@@ -33,30 +37,19 @@ public class DataDisplayActivity extends AppCompatActivity implements VaporizerD
     @Bind(R.id.intro_text)
     TextView introText;
 
-    @Bind(R.id.battery)
-    TextView battery;
-
-    @Bind(R.id.temperature)
-    TextView temperature;
-
-    @Bind(R.id.temperatureSetPoint)
-    TextView temperatureSetPoint;
-
-    @Bind(R.id.tempBoost)
-    TextView tempBoost;
-
-    @Bind(R.id.led)
-    TextView led;
+    @Bind(R.id.dataContainer)
+    ViewGroup dataContainer;
 
     @Bind(R.id.fam)
     FloatingActionsMenu fam;
 
     private LoadToast loadToast;
+    private VaporizerDataBinder vaporizerDataBinder;
 
     @OnClick(R.id.led)
     void ledClick() {
         final boolean isUnknownOrNotBright = getApp().getVaporizerCommunicator().getData().ledPercentage == null ||
-                                             getApp().getVaporizerCommunicator().getData().ledPercentage == 0;
+                getApp().getVaporizerCommunicator().getData().ledPercentage == 0;
         getApp().getVaporizerCommunicator().setLEDBrightness(isUnknownOrNotBright ? 100 : 0);
     }
 
@@ -102,6 +95,11 @@ public class DataDisplayActivity extends AppCompatActivity implements VaporizerD
 
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+
+        introText.setText(Html.fromHtml(getString(R.string.intro_text)));
+        introText.setMovementMethod(new LinkMovementMethod());
+
+        vaporizerDataBinder = new VaporizerDataBinder(this, getApp().getSettings());
 
         AppRate.with(this).retryPolicy(RetryPolicy.EXPONENTIAL).initialLaunchCount(5).checkAndShow();
 
@@ -154,22 +152,15 @@ public class DataDisplayActivity extends AppCompatActivity implements VaporizerD
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if (introText.getVisibility() == VISIBLE) {
-                    if (data.hasData()) {
+                if (data.hasData()) {
+                    if (introText.getVisibility() == VISIBLE) {
+                        dataContainer.setVisibility(VISIBLE);
                         introText.setVisibility(GONE);
                         loadToast.success();
-                    } else {
-                        introText.setText(Html.fromHtml(getString(R.string.intro_text)));
-                        introText.setMovementMethod(new LinkMovementMethod());
                     }
-                }
 
-                battery.setText((data.batteryPercentage == null ? "?" : "" + data.batteryPercentage) + "%");
-                final Settings settings = getApp().getSettings();
-                temperature.setText(TemperatureFormatter.Companion.getFormattedTemp(settings, data.currentTemperature, true) + " / ");
-                temperatureSetPoint.setText(TemperatureFormatter.Companion.getFormattedTemp(settings, data.setTemperature, true));
-                tempBoost.setText("+" + TemperatureFormatter.Companion.getFormattedTemp(settings, data.boostTemperature, false));
-                led.setText((data.ledPercentage == null ? "?" : "" + data.ledPercentage) + "%");
+                    vaporizerDataBinder.bind(data);
+                }
             }
         });
     }
