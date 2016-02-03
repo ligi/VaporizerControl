@@ -1,84 +1,24 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:fab="http://schemas.android.com/apk/res-auto"
+<snow.skittles.SkittleLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/skittleLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="16dp">
+    android:fitsSystemWindows="true"
+    app:mainSkittleColor="@color/accent"
+    app:mainSkittleIcon="@drawable/ic_action_edit">
 
 
-    <include layout="@layout/values_layout" />
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <net.i2p.android.ext.floatingactionbutton.FloatingActionsMenu
-        android:id="@+id/fam"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginBottom="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        fab:fab_colorNormal="@color/accent"
-        fab:fab_colorPressed="@color/accent"
-        fab:fab_icon="@drawable/ic_action_edit"
-        fab:fab_labelStyle="@style/menu_labels_style"
-        fab:fab_title="Boost temperature">
+        <include layout="@layout/values_layout" />
 
-        <net.i2p.android.ext.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab_action_edit_settemp"
+        <TextView
+            android:id="@+id/intro_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            fab:fab_colorNormal="@color/accent"
-            fab:fab_colorPressed="@color/secondary"
-            fab:fab_icon="@drawable/ic_action_temperature"
-            fab:fab_size="mini"
-            fab:fab_title="Temperature setpoint" />
+            android:layout_gravity="center" />
 
-
-        <net.i2p.android.ext.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab_action_edit_boost"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            fab:fab_colorNormal="@color/accent"
-            fab:fab_colorPressed="@color/secondary"
-            fab:fab_icon="@drawable/ic_action_flash"
-            fab:fab_size="mini"
-            fab:fab_title="Booster temperature" />
-
-
-        <net.i2p.android.ext.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab_action_edit_led"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            fab:fab_colorNormal="@color/accent"
-            fab:fab_colorPressed="@color/secondary"
-            fab:fab_icon="@drawable/ic_action_bulb"
-            fab:fab_size="mini"
-            fab:fab_title="LED Brightness" />
-
-
-    </net.i2p.android.ext.floatingactionbutton.FloatingActionsMenu>
-
-    <net.i2p.android.ext.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-
-        android:layout_marginBottom="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        fab:fab_colorNormal="@color/accent"
-        fab:fab_colorPressed="@color/secondary"
-        fab:fab_icon="@drawable/ic_action_edit"
-        fab:fab_title="Boost temperature" />
-
-
-    <TextView
-        android:id="@+id/intro_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center" />
-
-</RelativeLayout>
+    </FrameLayout>
+</snow.skittles.SkittleLayout>

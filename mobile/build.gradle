@@ -24,14 +24,14 @@ android {
 }
 
 dependencies {
+    compile 'com.rlj.library:skittles:2.1.1'
+
     compile 'com.jakewharton:butterknife:7.0.1'
 
     compile 'net.steamcrafted:load-toast:1.0.9'
     //wearApp project(':wear')
 
     compile 'com.android.support:appcompat-v7:23.1.1'
-
-    compile 'net.i2p.android.ext:floatingactionbutton:1.10.0'
 
     compile 'com.acappelli:discreteSeekBar:1.0'
     compile 'org.ligi:AXT:0.35'

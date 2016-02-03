@@ -11,21 +11,27 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import net.steamcrafted.loadtoast.LoadToast;
+
+import org.ligi.tracedroid.sending.TraceDroidEmailSender;
+import org.ligi.vaporizercontrol.R;
+import org.ligi.vaporizercontrol.VaporizerDataBinder;
+import org.ligi.vaporizercontrol.model.VaporizerData;
+import org.ligi.vaporizercontrol.wiring.App;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnLongClick;
 import fr.nicolaspomepuy.discreetapprate.AppRate;
 import fr.nicolaspomepuy.discreetapprate.RetryPolicy;
-import net.i2p.android.ext.floatingactionbutton.FloatingActionsMenu;
-import net.steamcrafted.loadtoast.LoadToast;
-import org.ligi.tracedroid.sending.TraceDroidEmailSender;
-import org.ligi.vaporizercontrol.R;
-import org.ligi.vaporizercontrol.VaporizerDataBinder;
-import org.ligi.vaporizercontrol.model.Settings;
-import org.ligi.vaporizercontrol.model.VaporizerData;
-import org.ligi.vaporizercontrol.util.TemperatureFormatter;
-import org.ligi.vaporizercontrol.wiring.App;
+import snow.skittles.Skittle;
+import snow.skittles.SkittleBuilder;
+import snow.skittles.SkittleContainer;
+import snow.skittles.SkittleLayout;
+import snow.skittles.TextSkittle;
+
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 
@@ -34,15 +40,17 @@ public class DataDisplayActivity extends AppCompatActivity implements VaporizerD
     @Bind(R.id.intro_text)
     TextView introText;
 
-    @Bind(R.id.fam)
-    FloatingActionsMenu fam;
+    @Bind(R.id.skittleLayout)
+    SkittleLayout fam;
 
     private LoadToast loadToast;
+
+    private VaporizerDataBinder vaporizerDataBinder;
 
     @OnClick(R.id.led)
     void ledClick() {
         final boolean isUnknownOrNotBright = getApp().getVaporizerCommunicator().getData().ledPercentage == null ||
-                                             getApp().getVaporizerCommunicator().getData().ledPercentage == 0;
+                getApp().getVaporizerCommunicator().getData().ledPercentage == 0;
         getApp().getVaporizerCommunicator().setLEDBrightness(isUnknownOrNotBright ? 100 : 0);
     }
 
@@ -58,28 +66,28 @@ public class DataDisplayActivity extends AppCompatActivity implements VaporizerD
         ChangeDialogs.showTemperatureDialog(this, getApp().getVaporizerCommunicator());
     }
 
-    @OnClick(R.id.fab)
+    //foo
     void onFAMClick() {
-        fam.toggle();
+        //foofam.toggle();
     }
 
-    @OnClick(R.id.fab_action_edit_boost)
+    //foo
     void editBoostClick() {
         ChangeDialogs.setBooster(this, getApp().getVaporizerCommunicator());
-        fam.collapse();
+        //foofam.collapse();
     }
 
-    @OnClick(R.id.fab_action_edit_settemp)
+    //foo
     void editSetTempClick() {
         ChangeDialogs.showTemperatureDialog(this, getApp().getVaporizerCommunicator());
-        fam.collapse();
+        //fam.collapse();
     }
 
 
-    @OnClick(R.id.fab_action_edit_led)
+    //foo
     void editLEDClick() {
         ChangeDialogs.showLEDPercentageDialog(this, getApp().getVaporizerCommunicator());
-        fam.collapse();
+        //foofam.collapse();
     }
 
     @Override
@@ -89,6 +97,32 @@ public class DataDisplayActivity extends AppCompatActivity implements VaporizerD
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
+        final SkittleBuilder builder = new SkittleBuilder.Builder(this, fam)
+                .mainSkittleColor( R.color.accent)
+                .build();
+
+
+        builder.makeTextSkittle("foo",R.drawable.ic_action_bulb).add();
+
+//        builder.addSkittle(R.drawable.ic_action_bulb, R.color.accent);
+
+
+        builder.setSkittleListener(new SkittleBuilder.SkittleClickListener() {
+            @Override
+            public void onSkittleClick(Skittle skittle) {
+
+            }
+
+            @Override
+            public void onTextSkittleClick(TextSkittle textSkittle, String type) {
+
+            }
+        });
+        /*builder.addSkittle(R.drawable.barratheon_icon, R.color.barratheon);
+        builder.addSkittle(R.drawable.stark_icon, R.color.stark);
+        */
+
+        vaporizerDataBinder = new VaporizerDataBinder(this, getApp().getSettings());
         AppRate.with(this).retryPolicy(RetryPolicy.EXPONENTIAL).initialLaunchCount(5).checkAndShow();
 
         loadToast = new LoadToast(this);
@@ -150,6 +184,7 @@ public class DataDisplayActivity extends AppCompatActivity implements VaporizerD
                     }
                 }
 
+                vaporizerDataBinder.bind(data);
             }
         });
     }
