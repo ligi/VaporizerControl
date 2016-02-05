@@ -106,7 +106,6 @@ public class DataDisplayActivity extends AppCompatActivity implements VaporizerD
 
         builder.addSkittle(foo.build());
 
-        builder.c
 //        builder.makeTextSkittle("foo",R.drawable.ic_action_bulb).add();
 
 //        builder.addSkittle(R.drawable.ic_action_bulb, R.color.accent);
