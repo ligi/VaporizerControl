@@ -97,16 +97,21 @@ public class DataDisplayActivity extends AppCompatActivity implements VaporizerD
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        final SkittleBuilder builder = new SkittleBuilder.Builder(this, fam)
-                .mainSkittleColor( R.color.accent)
-                .build();
+        final SkittleBuilder builder = SkittleBuilder.newInstance(fam);
+        builder.changeMainSkittleColor(getResources().getColor(R.color.accent));
 
+        final TextSkittle.Builder foo = new TextSkittle.Builder("foo", getResources().getColor(R.color.accent), getResources().getDrawable(R.drawable.ic_action_bulb));
 
-        builder.makeTextSkittle("foo",R.drawable.ic_action_bulb).add();
+        foo.setTextBackground(getResources().getColor(R.color.accent));
+
+        builder.addSkittle(foo.build());
+
+        builder.c
+//        builder.makeTextSkittle("foo",R.drawable.ic_action_bulb).add();
 
 //        builder.addSkittle(R.drawable.ic_action_bulb, R.color.accent);
 
-
+/*
         builder.setSkittleListener(new SkittleBuilder.SkittleClickListener() {
             @Override
             public void onSkittleClick(Skittle skittle) {
@@ -118,7 +123,7 @@ public class DataDisplayActivity extends AppCompatActivity implements VaporizerD
 
             }
         });
-        /*builder.addSkittle(R.drawable.barratheon_icon, R.color.barratheon);
+        builder.addSkittle(R.drawable.barratheon_icon, R.color.barratheon);
         builder.addSkittle(R.drawable.stark_icon, R.color.stark);
         */
 
