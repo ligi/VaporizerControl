@@ -1,6 +1,8 @@
 buildscript {
     ext {
-        kotlin_version = '1.0.0-beta-4589'
+        kotlin_version = '1.0.0'
+        anko_version = '0.8.2'
+        support_version = '23.1.1'
     }
 
     repositories {
@@ -13,7 +15,7 @@ buildscript {
         classpath 'com.github.JakeWharton:sdk-manager-plugin:220bf7a88a7072df3ed16dc8466fb144f2817070'
 
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        classpath 'com.android.tools.build:gradle:2.0.0-beta2'
+        classpath 'com.android.tools.build:gradle:2.0.0-beta5'
     }
 }
 

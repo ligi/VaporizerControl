@@ -29,16 +29,16 @@ dependencies {
     compile 'net.steamcrafted:load-toast:1.0.10'
     //wearApp project(':wear')
 
-    compile 'com.android.support:appcompat-v7:23.1.1'
+    compile "com.android.support:appcompat-v7:$support_version"
 
     compile 'net.i2p.android.ext:floatingactionbutton:1.10.0'
 
     compile 'com.acappelli:discreteSeekBar:1.0'
     compile 'org.ligi:AXT:0.35'
 
-    compile 'org.jetbrains.anko:anko-sdk15:0.7.3'
-    compile 'org.jetbrains.anko:anko-support-v4:0.7.3'
-    compile 'org.jetbrains.anko:anko-appcompat-v7:0.7.3'
+    compile "org.jetbrains.anko:anko-sdk15:$anko_version"
+    compile "org.jetbrains.anko:anko-support-v4:$anko_version"
+    compile "org.jetbrains.anko:anko-appcompat-v7:$anko_version"
 
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     compile "org.jetbrains.kotlin:kotlin-runtime:$kotlin_version"
@@ -50,7 +50,7 @@ dependencies {
     testCompile('com.squareup.assertj:assertj-android:1.1.1')
     testCompile 'junit:junit:4.12'
     testCompile 'org.mockito:mockito-core:2.0.31-beta'
-    testCompile 'com.android.support:support-annotations:23.1.1'
+    testCompile "com.android.support:support-annotations:$support_version"
 
     compile project(path: ':core')
 }

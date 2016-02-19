@@ -21,7 +21,7 @@ public class SettingsActivity : AppCompatActivity() {
         val settings = getApp().settings
         val mac = settings.autoConnectMAC
 
-        supportActionBar.setDisplayHomeAsUpEnabled(true);
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true);
 
         verticalLayout {
             radioGroup() {
