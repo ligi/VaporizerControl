@@ -21,6 +21,8 @@ public class VaporizerData {
     public String serial;
     @Nullable
     public Integer hoursOfOperation;
+    @Nullable
+    public Long lastDataMillis;
 
     public interface VaporizerUpdateListener {
         void onUpdate(VaporizerData data);

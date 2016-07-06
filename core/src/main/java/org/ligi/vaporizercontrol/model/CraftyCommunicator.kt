@@ -3,11 +3,12 @@ package org.ligi.vaporizercontrol.model
 import android.bluetooth.*
 import android.content.Context
 import android.os.Looper
+import android.os.SystemClock
 import android.widget.Toast
 import org.ligi.vaporizercontrol.model.CRAFTY_UUIDS.*
 import java.util.*
 
-public class CraftyCommunicator(private val context: Context,private val settings: WritableSettings) : VaporizerCommunicator {
+class CraftyCommunicator(private val context: Context, private val settings: WritableSettings) : VaporizerCommunicator {
 
     private val bt: BluetoothAdapter?
     private var gatt: BluetoothGatt? = null
@@ -28,7 +29,6 @@ public class CraftyCommunicator(private val context: Context,private val setting
 
     private var state = State.DISCONNECTED
 
-
     init {
         bt = (context.getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager).adapter
         Thread(HeartBeat()).start()
@@ -38,7 +38,7 @@ public class CraftyCommunicator(private val context: Context,private val setting
         return bt
     }
 
-    public fun destroy() {
+    fun destroy() {
         this.updateListener = null
         if (state == State.SCANNING && bt != null) {
             bt.stopLeScan(null)
@@ -71,14 +71,14 @@ public class CraftyCommunicator(private val context: Context,private val setting
         return gatt!!.readCharacteristic(characteristic)
     }
 
-    override fun setLEDBrightness(`val`: Int) {
-        data.ledPercentage = `val`
-        setValue(LED_CHARACTERISTIC_UUID, `val`)
+    override fun setLEDBrightness(value: Int) {
+        data.ledPercentage = value
+        setValue(LED_CHARACTERISTIC_UUID, value)
     }
 
-    override fun setBoosterTemperature(`val`: Int) {
-        data.boostTemperature = `val`
-        setValue(TEMPERATURE_BOOST_CHARACTERISTIC_UUID, `val`)
+    override fun setBoosterTemperature(value: Int) {
+        data.boostTemperature = value
+        setValue(TEMPERATURE_BOOST_CHARACTERISTIC_UUID, value)
     }
 
     private fun setValue(uuid: String, value: Int) {
@@ -169,17 +169,17 @@ public class CraftyCommunicator(private val context: Context,private val setting
         override fun run() {
             Looper.prepare()
             while (running) {
-                try {
-                    Thread.sleep(100)
-                } catch (e: InterruptedException) {
-                    e.printStackTrace()
-                }
-
+                SystemClock.sleep(100)
 
                 if (state == State.DISCONNECTED) {
                     connectOrStartScan()
                 } else {
                     readNextCharacteristic()
+                    data.lastDataMillis = System.currentTimeMillis()
+
+                }
+                if (updateListener != null) {
+                    updateListener!!.onUpdate(data)
                 }
 
             }
@@ -187,7 +187,7 @@ public class CraftyCommunicator(private val context: Context,private val setting
     }
 
     private fun connectOrStartScan() {
-        if (bt==null || !bt.isEnabled) {
+        if (bt == null || !bt.isEnabled) {
             return
         }
 
@@ -210,6 +210,8 @@ public class CraftyCommunicator(private val context: Context,private val setting
                     gatt = newGatt
                     newGatt!!.discoverServices()
                     state = State.CONNECTED
+                } else if (newState == BluetoothProfile.STATE_DISCONNECTED) {
+                    state = State.DISCONNECTED
                 }
 
             }
