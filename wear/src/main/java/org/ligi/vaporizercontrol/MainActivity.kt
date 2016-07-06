@@ -13,6 +13,12 @@ class MainActivity : Activity() {
 
 
     internal inner class MyWritableSettings : WritableSettings {
+        override fun setNightMode(nightMode: Int) {
+        }
+
+        override fun getNightMode(): Int {
+            return 0
+        }
 
         override fun shouldDisplayUnit(should: Boolean) {
 

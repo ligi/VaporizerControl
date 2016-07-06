@@ -7,6 +7,8 @@ public interface Settings {
 
     int getTemperatureFormat();
 
+    int getNightMode();
+
     String getAutoConnectMAC();
 
     boolean isDisplayUnitWanted();

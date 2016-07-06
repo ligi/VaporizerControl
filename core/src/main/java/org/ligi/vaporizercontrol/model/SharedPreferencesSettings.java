@@ -3,6 +3,7 @@ package org.ligi.vaporizercontrol.model;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.support.v7.app.AppCompatDelegate;
 
 public class SharedPreferencesSettings implements WritableSettings {
 
@@ -60,6 +61,17 @@ public class SharedPreferencesSettings implements WritableSettings {
     public void shouldPoll(final boolean should) {
         getPrefs().edit().putBoolean("polling", should).commit();
     }
+
+    @Override
+    public void setNightMode(final int nightMode) {
+        getPrefs().edit().putInt("nightmode", nightMode).commit();
+    }
+
+    @Override
+    public int getNightMode() {
+        return getPrefs().getInt("nightmode", AppCompatDelegate.MODE_NIGHT_YES);
+    }
+
 
     @Override
     public void shouldBePrecise(final boolean should) {

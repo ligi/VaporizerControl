@@ -1,6 +1,7 @@
 package org.ligi.vaporizercontrol.wiring
 
 import android.app.Application
+import android.support.v7.app.AppCompatDelegate
 import org.ligi.tracedroid.TraceDroid
 import org.ligi.vaporizercontrol.model.CraftyCommunicator
 import org.ligi.vaporizercontrol.model.SharedPreferencesSettings
@@ -13,7 +14,8 @@ class App : Application() {
     val settings: WritableSettings by lazy { SharedPreferencesSettings(this) }
 
     override fun onCreate() {
-        TraceDroid.init(this)
         super.onCreate()
+        TraceDroid.init(this)
+        AppCompatDelegate.setDefaultNightMode(settings.nightMode)
     }
 }

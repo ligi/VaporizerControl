@@ -12,4 +12,6 @@ public interface WritableSettings extends Settings {
 
     void shouldPoll(final boolean poll);
 
+    void setNightMode(final int nightMode);
+
 }
