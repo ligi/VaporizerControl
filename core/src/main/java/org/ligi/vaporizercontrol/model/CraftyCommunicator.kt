@@ -34,8 +34,8 @@ public class CraftyCommunicator(private val context: Context,private val setting
         Thread(HeartBeat()).start()
     }
 
-    override fun isBluetoothAvailable(): Boolean {
-        return bt != null
+    override fun getBluetooth(): BluetoothAdapter? {
+        return bt
     }
 
     public fun destroy() {
@@ -187,7 +187,7 @@ public class CraftyCommunicator(private val context: Context,private val setting
     }
 
     private fun connectOrStartScan() {
-        if (!isBluetoothAvailable) {
+        if (bt==null || !bt.isEnabled) {
             return
         }
 

@@ -87,12 +87,16 @@ class DataDisplayActivity : AppCompatActivity(), VaporizerData.VaporizerUpdateLi
 
     override fun onResume() {
         super.onResume()
-        if (!app.vaporizerCommunicator.isBluetoothAvailable) {
+        val bluetooth = app.vaporizerCommunicator.bluetooth
+        if (bluetooth == null) {
             Handler().postDelayed({
                 Toast.makeText(this@DataDisplayActivity, "can not scan - no BT available", Toast.LENGTH_LONG).show()
                 loadToast!!.error()
             }, 1000)
         } else {
+            if (!bluetooth.isEnabled) {
+                bluetooth.enable()
+            }
             app.vaporizerCommunicator.setUpdateListener(this)
         }
         onUpdate(app.vaporizerCommunicator.data)
