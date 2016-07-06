@@ -5,8 +5,13 @@
               android:orientation="vertical"
               android:padding="16dp">
 
+    <TextView android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:textAppearance="?android:textAppearanceLarge"
+              android:text="Information"/>
+
     <TableLayout
-            android:layout_gravity="center_horizontal"
+            android:paddingTop="16dp"
             android:paddingBottom="16dp"
             android:layout_width="wrap_content" android:layout_height="wrap_content">
 
@@ -18,7 +23,7 @@
                     android:text="Model:"
                     android:fontFamily="sans-serif-light"
                     android:paddingRight="8dp"
-                    />
+            />
 
             <TextView
                     android:id="@+id/model"
@@ -36,7 +41,7 @@
                     android:fontFamily="sans-serif-light"
                     android:text="Version:"
                     android:paddingRight="8dp"
-                    />
+            />
 
             <TextView
                     android:id="@+id/version"
@@ -54,7 +59,7 @@
                     android:fontFamily="sans-serif-light"
                     android:text="Serial:"
                     android:paddingRight="8dp"
-                    />
+            />
 
             <TextView
                     android:layout_width="wrap_content"
@@ -72,7 +77,7 @@
                     android:fontFamily="sans-serif-light"
                     android:text="Hours:"
                     android:paddingRight="8dp"
-                    />
+            />
 
             <TextView
                     android:id="@+id/hours"

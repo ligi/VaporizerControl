@@ -1,6 +1,7 @@
 apply plugin: 'android-sdk-manager'
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
 
 android {
     compileSdkVersion 23
@@ -24,10 +25,7 @@ android {
 }
 
 dependencies {
-    compile 'com.jakewharton:butterknife:7.0.1'
-
     compile 'net.steamcrafted:load-toast:1.0.10'
-    //wearApp project(':wear')
 
     compile "com.android.support:appcompat-v7:$support_version"
 
