@@ -1,5 +1,7 @@
 package org.ligi.vaporizercontrol.model;
 
+import android.bluetooth.BluetoothAdapter;
+
 public interface VaporizerCommunicator {
     VaporizerData getData();
 
@@ -9,7 +11,7 @@ public interface VaporizerCommunicator {
 
     void setTemperatureSetPoint(int i);
 
-    boolean isBluetoothAvailable();
+    BluetoothAdapter getBluetooth();
 
     void setUpdateListener(VaporizerData.VaporizerUpdateListener dataDisplayActivity);
 }
