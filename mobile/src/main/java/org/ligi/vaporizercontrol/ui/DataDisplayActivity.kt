@@ -10,6 +10,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View.GONE
 import android.view.View.VISIBLE
+import android.view.WindowManager
 import android.widget.Toast
 import fr.nicolaspomepuy.discreetapprate.AppRate
 import fr.nicolaspomepuy.discreetapprate.RetryPolicy
@@ -126,4 +127,9 @@ class DataDisplayActivity : AppCompatActivity(), VaporizerData.VaporizerUpdateLi
         menuInflater.inflate(R.menu.menu_main, menu)
         return super.onCreateOptionsMenu(menu)
     }
+
+    override fun onAttachedToWindow() {
+        window.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED)
+    }
+
 }
