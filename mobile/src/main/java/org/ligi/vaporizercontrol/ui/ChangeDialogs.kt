@@ -100,7 +100,7 @@ object ChangeDialogs {
         }
         scrollView.addView(lin)
 
-        AlertDialog.Builder(ctx).setView(scrollView).setMessage("Set Temperature").setPositiveButton("OK") { dialog, which -> comm.setTemperatureSetPoint(discreteSeekBar.progress * 10) }.show()
+        AlertDialog.Builder(ctx).setView(scrollView).setTitle("Set Temperature").setPositiveButton("OK") { dialog, which -> comm.setTemperatureSetPoint(discreteSeekBar.progress * 10) }.show()
     }
 
     private class TemperatureSetting(val temp: Int, val htmlDescription: String)
