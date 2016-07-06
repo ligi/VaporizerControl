@@ -23,15 +23,15 @@ import org.ligi.vaporizercontrol.wiring.App
 
 class DataDisplayActivity : AppCompatActivity(), VaporizerData.VaporizerUpdateListener {
 
-    private val loadToast: LoadToast by lazy { LoadToast(this)}
-    private val vaporizerDataBinder: VaporizerDataBinder by lazy { VaporizerDataBinder(this, app.settings) }
+    private val loadToast by lazy { LoadToast(this) }
+    private val vaporizerDataBinder by lazy { VaporizerDataBinder(this, app.settings) }
+    private val app by lazy { application as App }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_main)
 
-        fab.setOnClickListener { fam!!.toggle() }
         findViewById(R.id.led)!!.setOnClickListener {
             val isUnknownOrNotBright = app.vaporizerCommunicator.data.ledPercentage == null || app.vaporizerCommunicator.data.ledPercentage === 0
             app.vaporizerCommunicator.setLEDBrightness(if (isUnknownOrNotBright) 100 else 0)
@@ -100,14 +100,10 @@ class DataDisplayActivity : AppCompatActivity(), VaporizerData.VaporizerUpdateLi
         onUpdate(app.vaporizerCommunicator.data)
     }
 
-    private val app: App
-        get() = application as App
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_settings -> startActivity(Intent(this, SettingsActivity::class.java))
-            R.id.action_help ->
-                HelpDialogFragment().show(supportFragmentManager, "help")
+            R.id.action_help -> HelpDialogFragment().show(supportFragmentManager, "help")
         }
         return super.onOptionsItemSelected(item)
     }
