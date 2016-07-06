@@ -23,7 +23,7 @@ import org.ligi.vaporizercontrol.wiring.App
 
 class DataDisplayActivity : AppCompatActivity(), VaporizerData.VaporizerUpdateListener {
 
-    private var loadToast: LoadToast? = null
+    private val loadToast: LoadToast by lazy { LoadToast(this)}
     private val vaporizerDataBinder: VaporizerDataBinder by lazy { VaporizerDataBinder(this, app.settings) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -76,11 +76,9 @@ class DataDisplayActivity : AppCompatActivity(), VaporizerData.VaporizerUpdateLi
 
         AppRate.with(this).retryPolicy(RetryPolicy.EXPONENTIAL).initialLaunchCount(5).checkAndShow()
 
-        loadToast = LoadToast(this)
-
         if (!TraceDroidEmailSender.sendStackTraces("ligi@ligi.de", this) && !app.vaporizerCommunicator.data.hasData()) {
-            loadToast!!.setText("searching crafty")
-            loadToast!!.show()
+            loadToast.setText("searching crafty")
+            loadToast.show()
         }
     }
 
@@ -91,7 +89,7 @@ class DataDisplayActivity : AppCompatActivity(), VaporizerData.VaporizerUpdateLi
         if (bluetooth == null) {
             Handler().postDelayed({
                 Toast.makeText(this@DataDisplayActivity, "can not scan - no BT available", Toast.LENGTH_LONG).show()
-                loadToast!!.error()
+                loadToast.error()
             }, 1000)
         } else {
             if (!bluetooth.isEnabled) {
@@ -120,7 +118,7 @@ class DataDisplayActivity : AppCompatActivity(), VaporizerData.VaporizerUpdateLi
                 if (intro_text.visibility == VISIBLE) {
                     dataContainer.visibility = VISIBLE
                     intro_text.visibility = GONE
-                    loadToast!!.success()
+                    loadToast.success()
                 }
 
                 vaporizerDataBinder.bind(data)
