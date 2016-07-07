@@ -50,7 +50,7 @@ object ChangeDialogs {
             // src http://web.archive.org/web/20100223183517/http://en.wikipedia.org/wiki/Vaporizer
             TemperatureSetting(1230, "<a href='http://en.wikipedia.org/wiki/Syzygium_aromaticum'>Clove</a> Dried flower buds"),
             TemperatureSetting(1300,
-                    "<a href='http://en.wikipedia.org/wiki/Eucalyptus_globulus'>Eucapyptus</a> " + "or <a href='http://en.wikipedia.org/wiki/Lavandula_angustifolia'>Lavender</a> Leaves"),
+                    "<a href='http://en.wikipedia.org/wiki/Eucalyptus_globulus'>Eucalyptus</a> " + "or <a href='http://en.wikipedia.org/wiki/Lavandula_angustifolia'>Lavender</a> Leaves"),
             TemperatureSetting(1400, "<a href='http://en.wikipedia.org/wiki/Ginkgo_biloba'>Ginkgo</a> Leaves or seeds"),
             TemperatureSetting(1420, "<a href='http://en.wikipedia.org/wiki/Melissa_officinalis'>Lemon balm</a> Leaves"),
             TemperatureSetting(1540, "<a href='http://en.wikipedia.org/wiki/Humulus_lupulus'>Hops</a> Cones"),
