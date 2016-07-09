@@ -14,7 +14,7 @@ node {
  } catch(err) {
   currentBuild.result = FAILURE
  } finally {
-  publishHTML(target:[allowMissing: true, alwaysLinkToLastBuild: true, keepAll: true, reportDir: 'mobile/build/outputs/', reportFiles: "lint-results-*elease.html", reportName: 'Lint'])
+  publishHTML(target:[allowMissing: true, alwaysLinkToLastBuild: true, keepAll: true, reportDir: 'mobile/build/outputs/', reportFiles: "lint-results-*.html", reportName: 'Lint'])
  }
 
  stage 'test'
