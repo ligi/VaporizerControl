@@ -1,11 +1,14 @@
 package org.ligi.vaporizercontrol.ui
 
+import android.Manifest
 import android.content.Intent
 import android.os.Bundle
+import android.os.Debug
 import android.os.Handler
 import android.support.v7.app.AppCompatActivity
 import android.text.Html
 import android.text.method.LinkMovementMethod
+import android.util.DebugUtils
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View.GONE
@@ -21,7 +24,10 @@ import org.ligi.vaporizercontrol.R
 import org.ligi.vaporizercontrol.VaporizerDataBinder
 import org.ligi.vaporizercontrol.model.VaporizerData
 import org.ligi.vaporizercontrol.wiring.App
+import permissions.dispatcher.NeedsPermission
+import permissions.dispatcher.RuntimePermissions
 
+@RuntimePermissions
 class DataDisplayActivity : AppCompatActivity(), VaporizerData.VaporizerUpdateListener {
 
     private val loadToast by lazy { LoadToast(this) }
@@ -86,19 +92,9 @@ class DataDisplayActivity : AppCompatActivity(), VaporizerData.VaporizerUpdateLi
 
     override fun onResume() {
         super.onResume()
-        val bluetooth = app.vaporizerCommunicator.bluetooth
-        if (bluetooth == null) {
-            Handler().postDelayed({
-                Toast.makeText(this@DataDisplayActivity, "can not scan - no BT available", Toast.LENGTH_LONG).show()
-                loadToast.error()
-            }, 1000)
-        } else {
-            if (!bluetooth.isEnabled) {
-                bluetooth.enable()
-            }
-            app.vaporizerCommunicator.setUpdateListener(this)
-        }
-        onUpdate(app.vaporizerCommunicator.data)
+
+        DataDisplayActivityPermissionsDispatcher.fooWithCheck(this);
+
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -121,6 +117,31 @@ class DataDisplayActivity : AppCompatActivity(), VaporizerData.VaporizerUpdateLi
                 vaporizerDataBinder.bind(data)
             }
         }
+    }
+
+    @NeedsPermission(Manifest.permission.BLUETOOTH, Manifest.permission.BLUETOOTH_ADMIN, Manifest.permission.ACCESS_FINE_LOCATION)
+    fun foo() {
+
+        val bluetooth = app.vaporizerCommunicator.bluetooth
+        if (bluetooth == null) {
+            Handler().postDelayed({
+                Toast.makeText(this@DataDisplayActivity, "can not scan - no BT available", Toast.LENGTH_LONG).show()
+                loadToast.error()
+            }, 1000)
+        } else {
+            if (!bluetooth.isEnabled) {
+                bluetooth.enable()
+            }
+            app.vaporizerCommunicator.setUpdateListener(this)
+        }
+        onUpdate(app.vaporizerCommunicator.data)
+    }
+
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        // NOTE: delegate the permission handling to generated method
+        DataDisplayActivityPermissionsDispatcher.onRequestPermissionsResult(this, requestCode, grantResults)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

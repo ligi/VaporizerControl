@@ -4,13 +4,13 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 android {
-    compileSdkVersion 23
+    compileSdkVersion 24
     buildToolsVersion "23.0.3"
 
     defaultConfig {
         applicationId "org.ligi.vaporizercontrol"
         minSdkVersion 18
-        targetSdkVersion 22
+        targetSdkVersion 24
         versionCode 19
         versionName "1.9"
         archivesBaseName = "VaporizerControl-$versionName"
@@ -25,6 +25,10 @@ android {
 }
 
 dependencies {
+
+    compile 'com.github.hotchemi:permissionsdispatcher:2.1.3'
+    kapt 'com.github.hotchemi:permissionsdispatcher-processor:2.1.3'
+
     compile 'net.steamcrafted:load-toast:1.0.10'
 
     compile "com.android.support:appcompat-v7:$support_version"
@@ -51,4 +55,10 @@ dependencies {
     testCompile "com.android.support:support-annotations:$support_version"
 
     compile project(path: ':core')
+}
+
+
+kapt {
+    // this is needed for the permissionsdispatcher
+    generateStubs = true
 }

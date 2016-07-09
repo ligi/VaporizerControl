@@ -19,6 +19,7 @@ class CraftyCommunicator(private val context: Context, private val settings: Wri
     private var batteryNotificationEnabled = false
     private var tempNotificationEnabled = false
     private val running = true
+    private var remoteDevice:BluetoothDevice?=null
 
     enum class State {
         SCANNING,
@@ -202,7 +203,8 @@ class CraftyCommunicator(private val context: Context, private val settings: Wri
     private fun connect(addr: String) {
         state = State.CONNECTING
         settings.autoConnectMAC = addr
-        bt!!.getRemoteDevice(addr).connectGatt(context, true, object : BluetoothGattCallback() {
+        remoteDevice = bt!!.getRemoteDevice(addr)
+        remoteDevice?.connectGatt(context, true, object : BluetoothGattCallback() {
             override fun onConnectionStateChange(newGatt: BluetoothGatt?, status: Int, newState: Int) {
                 super.onConnectionStateChange(newGatt, status, newState)
 
