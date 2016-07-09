@@ -3,12 +3,10 @@ package org.ligi.vaporizercontrol.ui
 import android.Manifest
 import android.content.Intent
 import android.os.Bundle
-import android.os.Debug
 import android.os.Handler
 import android.support.v7.app.AppCompatActivity
 import android.text.Html
 import android.text.method.LinkMovementMethod
-import android.util.DebugUtils
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View.GONE
@@ -89,12 +87,18 @@ class DataDisplayActivity : AppCompatActivity(), VaporizerData.VaporizerUpdateLi
         }
     }
 
+    var currentSetNightMode : Int? = null
 
     override fun onResume() {
         super.onResume()
 
         DataDisplayActivityPermissionsDispatcher.fooWithCheck(this);
 
+        if (currentSetNightMode!=null && currentSetNightMode != app.settings.nightMode) {
+            recreate()
+        }
+
+        currentSetNightMode = app.settings.nightMode
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
