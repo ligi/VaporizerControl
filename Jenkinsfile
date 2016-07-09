@@ -14,7 +14,11 @@ node {
  } catch(err) {
   currentBuild.result = FAILURE
  } finally {
-  publishHTML(target:[allowMissing: true, alwaysLinkToLastBuild: true, keepAll: true, reportDir: 'mobile/build/outputs/', reportFiles: "lint-results-*.html", reportName: 'Lint'])
+  publishHTML(target:[allowMissing: true, alwaysLinkToLastBuild: true, keepAll: true, reportDir: 'mobile/build/outputs/', reportFiles: "lint-results-*.html", reportName: 'Lint mobile'])
+
+  publishHTML(target:[allowMissing: true, alwaysLinkToLastBuild: true, keepAll: true, reportDir: 'wear/build/outputs/', reportFiles: "lint-results-*.html", reportName: 'Lint wear'])
+
+  publishHTML(target:[allowMissing: true, alwaysLinkToLastBuild: true, keepAll: true, reportDir: 'core/build/outputs/', reportFiles: "lint-results-*.html", reportName: 'Lint core'])
  }
 
  stage 'test'
