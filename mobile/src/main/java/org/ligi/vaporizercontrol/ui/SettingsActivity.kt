@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.app.AppCompatDelegate
 import android.view.MenuItem
 import android.view.View
+import android.widget.LinearLayout
 import android.widget.Toast
 import org.jetbrains.anko.*
 import org.ligi.vaporizercontrol.model.Settings
@@ -22,11 +23,18 @@ class SettingsActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         verticalLayout {
+
+            headingText("Temperature format")
             radioGroup() {
+                orientation = LinearLayout.HORIZONTAL
+                leftPadding = dip(16)
+                bottomPadding = dip(16)
                 tempFormatRadio(Settings.TEMPERATURE_CELSIUS, "Celsius")
                 tempFormatRadio(Settings.TEMPERATURE_FAHRENHEIT, "Fahrenheit")
                 tempFormatRadio(Settings.TEMPERATURE_KELVIN, "Kelvin")
             }.check(settings.temperatureFormat)
+
+            headingText("Options")
 
             if (settings.autoConnectMAC != null) {
                 button("remove $mac as default") {
@@ -50,13 +58,22 @@ class SettingsActivity : AppCompatActivity() {
                 settings.shouldPoll(b)
             }
 
+            headingText("Day / Night mode ( theme )")
+
             radioGroup() {
+                orientation = LinearLayout.HORIZONTAL
                 dayNightRadio(AppCompatDelegate.MODE_NIGHT_YES, "Night")
                 dayNightRadio(AppCompatDelegate.MODE_NIGHT_NO, "Day")
                 dayNightRadio(AppCompatDelegate.MODE_NIGHT_AUTO, "Auto")
             }.check(settings.nightMode)
         }
 
+    }
+
+    private fun _LinearLayout.headingText(text: String) {
+        textView(text) {
+            padding = dip(8)
+        }
     }
 
     private fun _LinearLayout.settingsCheckBox(state: Boolean, label: String, function: (Any?, Boolean) -> Unit) {
