@@ -4,16 +4,13 @@ node {
  stage "checkout"
  checkout scm
 
- stage "clean"
- sh "./gradlew clean"
-
  stage 'assemble'
  sh "./gradlew clean assemble${flavorCombination}Release"
  archive 'mobile/build/outputs/apk/*'
 
  stage 'lint'
  try {
-  sh "./gradlew lint${flavorCombination}Release"
+  sh "./gradlew clean lint${flavorCombination}Release"
  } catch(err) {
   currentBuild.result = FAILURE
  } finally {
