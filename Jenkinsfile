@@ -4,6 +4,9 @@ node {
  stage "checkout"
  checkout scm
 
+ stage "clean"
+ sh "./gradlew clean"
+
  stage 'assemble'
  sh "./gradlew clean assemble${flavorCombination}Release"
  archive 'mobile/build/outputs/apk/*'
