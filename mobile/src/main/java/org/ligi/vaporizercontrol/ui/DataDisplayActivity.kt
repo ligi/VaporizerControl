@@ -28,6 +28,8 @@ class DataDisplayActivity : AppCompatActivity(), VaporizerData.VaporizerUpdateLi
     private val vaporizerDataBinder by lazy { VaporizerDataBinder(this, app.settings) }
     private val app by lazy { application as App }
 
+    private var lastNightMode: Int? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -99,6 +101,12 @@ class DataDisplayActivity : AppCompatActivity(), VaporizerData.VaporizerUpdateLi
             app.vaporizerCommunicator.setUpdateListener(this)
         }
         onUpdate(app.vaporizerCommunicator.data)
+
+        if (lastNightMode !=null && lastNightMode !=app.settings.nightMode) {
+            recreate()
+        }
+
+        lastNightMode = app.settings.nightMode
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
