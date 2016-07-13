@@ -42,11 +42,11 @@ class SettingsActivity : AppCompatActivity() {
                 settings.shouldDisplayUnit(b)
             }
 
-            settingsCheckBox(settings.isDisplayUnitWanted, "show rlly precise") { compoundButton, b ->
+            settingsCheckBox(settings.isPreciseWanted, "show rlly precise") { compoundButton, b ->
                 settings.shouldBePrecise(b)
             }
 
-            settingsCheckBox(settings.isDisplayUnitWanted, "poll ( only activate with old firmwares )") { compoundButton, b ->
+            settingsCheckBox(settings.isPollingWanted, "poll ( only activate with old firmwares )") { compoundButton, b ->
                 settings.shouldPoll(b)
             }
 
