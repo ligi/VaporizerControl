@@ -11,8 +11,8 @@ android {
         applicationId "org.ligi.vaporizercontrol"
         minSdkVersion 18
         targetSdkVersion 22
-        versionCode 21
-        versionName "2.1"
+        versionCode 22
+        versionName "2.2"
         archivesBaseName = "VaporizerControl-$versionName"
     }
         
