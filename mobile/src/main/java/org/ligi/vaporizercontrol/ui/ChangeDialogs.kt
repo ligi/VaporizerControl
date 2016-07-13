@@ -20,7 +20,7 @@ object ChangeDialogs {
     fun setBooster(ctx: Context, comm: VaporizerCommunicator) {
         val discreteSeekBar = DiscreteSeekBar(ctx)
         discreteSeekBar.max = (2100 - comm.data.setTemperature!!) / 10
-        discreteSeekBar.setIndicatorFormatter("%d°C")
+        discreteSeekBar.setIndicatorFormatter("%d°")
 
         if (comm.data.boostTemperature != null) {
             discreteSeekBar.progress = comm.data.boostTemperature!! / 10
