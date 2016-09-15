@@ -12,6 +12,7 @@ class CraftyCommunicator(private val context: Context, private val settings: Wri
 
     private val bt: BluetoothAdapter?
     private var gatt: BluetoothGatt? = null
+    private var remoteDevice: BluetoothDevice? = null
     private var service: BluetoothGattService? = null
     private var updateListener: VaporizerData.VaporizerUpdateListener? = null
     private val data = VaporizerData()
@@ -150,12 +151,12 @@ class CraftyCommunicator(private val context: Context, private val settings: Wri
         } else {
             if (!batteryNotificationEnabled) {
                 batteryNotificationEnabled = enableNotification(gatt, UUID.fromString(BATTERY_CHARACTERISTIC_UUID))
-                return batteryNotificationEnabled;
+                return batteryNotificationEnabled
             }
 
             if (!tempNotificationEnabled) {
                 tempNotificationEnabled = enableNotification(gatt, UUID.fromString(TEMPERATURE_CHARACTERISTIC_UUID))
-                return tempNotificationEnabled;
+                return tempNotificationEnabled
             }
         }
 
@@ -176,11 +177,9 @@ class CraftyCommunicator(private val context: Context, private val settings: Wri
                 } else {
                     readNextCharacteristic()
                     data.lastDataMillis = System.currentTimeMillis()
+                }
 
-                }
-                if (updateListener != null) {
-                    updateListener!!.onUpdate(data)
-                }
+                updateListener?.onUpdate(data)
 
             }
         }
@@ -202,7 +201,8 @@ class CraftyCommunicator(private val context: Context, private val settings: Wri
     private fun connect(addr: String) {
         state = State.CONNECTING
         settings.autoConnectMAC = addr
-        bt!!.getRemoteDevice(addr).connectGatt(context, true, object : BluetoothGattCallback() {
+        remoteDevice = bt!!.getRemoteDevice(addr)
+        remoteDevice!!.connectGatt(context, true, object : BluetoothGattCallback() {
             override fun onConnectionStateChange(newGatt: BluetoothGatt?, status: Int, newState: Int) {
                 super.onConnectionStateChange(newGatt, status, newState)
 
@@ -261,6 +261,7 @@ class CraftyCommunicator(private val context: Context, private val settings: Wri
     private fun enableNotification(gatt: BluetoothGatt?, enableCharacteristicFromUUID: UUID): Boolean {
         service = gatt!!.getService(UUID.fromString(DATA_SERVICE_UUID))
         val ledChar = service!!.getCharacteristic(enableCharacteristicFromUUID)
+
         gatt.setCharacteristicNotification(ledChar, true)
         val descriptor = ledChar.descriptors.get(0)
         descriptor.setValue(BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE)
