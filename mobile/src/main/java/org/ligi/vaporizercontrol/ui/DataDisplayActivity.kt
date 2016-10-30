@@ -16,6 +16,7 @@ import fr.nicolaspomepuy.discreetapprate.AppRate
 import fr.nicolaspomepuy.discreetapprate.RetryPolicy
 import kotlinx.android.synthetic.main.activity_main.*
 import net.steamcrafted.loadtoast.LoadToast
+import org.ligi.compat.HtmlCompat
 import org.ligi.tracedroid.sending.TraceDroidEmailSender
 import org.ligi.vaporizercontrol.R
 import org.ligi.vaporizercontrol.VaporizerDataBinder
@@ -74,7 +75,7 @@ class DataDisplayActivity : AppCompatActivity(), VaporizerData.VaporizerUpdateLi
             ChangeDialogs.showTemperatureDialog(this, app.vaporizerCommunicator)
         }
 
-        intro_text.text = Html.fromHtml(getString(R.string.intro_text))
+        intro_text.text = HtmlCompat.fromHtml(getString(R.string.intro_text))
         intro_text.movementMethod = LinkMovementMethod()
 
         AppRate.with(this).retryPolicy(RetryPolicy.EXPONENTIAL).initialLaunchCount(5).checkAndShow()
