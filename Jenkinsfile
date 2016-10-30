@@ -14,7 +14,7 @@ node {
  } catch(err) {
   currentBuild.result = FAILURE
  } finally {
-  publishHTML(target:[allowMissing: true, alwaysLinkToLastBuild: true, keepAll: true, reportDir: 'mobile/build/outputs/', reportFiles: "lint-results-*elease.html", reportName: 'Lint'])
+  androidLint canComputeNew: false, defaultEncoding: '', healthy: '', pattern: '', unHealthy: ''
  }
 
  stage 'test'
