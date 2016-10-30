@@ -1,25 +1,15 @@
 package org.ligi.vaporizercontrol.util
 
 import org.ligi.vaporizercontrol.model.Settings
+import java.lang.String.format
 
 object TemperatureFormatter {
-    fun Float.format(digits: Int) = java.lang.String.format("%.${digits}f", this)
+    fun Float.format(digits: Int) = format("%.${digits}f", this)!!
 
-    public fun getTempDegrees(temp: Int, temperatureFormat: Int): Int {
-        return when (temperatureFormat) {
-            Settings.TEMPERATURE_FAHRENHEIT -> temp * 5 / 9
-            Settings.TEMPERATURE_KELVIN -> temp - 2731
-            else -> temp
-        }
-    }
+    fun getFormattedTemp(settings: Settings, temp: Int?, absolute: Boolean) = getFormattedTemp(settings, temp, settings.temperatureFormat, absolute)
 
-    public fun getFormattedTemp(settings: Settings, temp: Int?, absolute: Boolean): String {
-        val tempFormat = settings.temperatureFormat;
-        return getFormattedTemp(settings, temp, tempFormat, absolute);
-    }
-
-    public fun getFormattedTemp(settings: Settings, temp: Int?, temperatureFormat: Int, absolute: Boolean): String {
-        var valString: String = if (temp == null) {
+    fun getFormattedTemp(settings: Settings, temp: Int?, temperatureFormat: Int, absolute: Boolean): String {
+        val valString: String = if (temp == null) {
             "?"
         } else {
             when (temperatureFormat) {
@@ -33,10 +23,10 @@ object TemperatureFormatter {
             return valString
         }
 
-        return when (temperatureFormat) {
-            Settings.TEMPERATURE_FAHRENHEIT -> valString + " °F";
-            Settings.TEMPERATURE_KELVIN -> valString + " °K";
-            else -> valString + " °C";
+        return valString + when (temperatureFormat) {
+            Settings.TEMPERATURE_FAHRENHEIT -> " °F"
+            Settings.TEMPERATURE_KELVIN -> " °K"
+            else -> " °C"
         }
     }
 }
