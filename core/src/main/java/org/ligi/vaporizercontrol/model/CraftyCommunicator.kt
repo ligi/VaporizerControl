@@ -253,9 +253,8 @@ class CraftyCommunicator(private val context: Context, private val settings: Wri
             HOURS_OF_OP_UUID -> data.hoursOfOperation = characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT16, 0)
         }
 
-        if (updateListener != null) {
-            updateListener!!.onUpdate(data)
-        }
+        updateListener?.onUpdate(data)
+
     }
 
     private fun enableNotification(gatt: BluetoothGatt?, enableCharacteristicFromUUID: UUID): Boolean {
@@ -263,8 +262,8 @@ class CraftyCommunicator(private val context: Context, private val settings: Wri
         val ledChar = service!!.getCharacteristic(enableCharacteristicFromUUID)
 
         gatt.setCharacteristicNotification(ledChar, true)
-        val descriptor = ledChar.descriptors.get(0)
-        descriptor.setValue(BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE)
+        val descriptor = ledChar.descriptors[0]
+        descriptor.value = BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE
         if (!gatt.writeDescriptor(descriptor)) {
             Toast.makeText(context, "Could not write descriptor for notification", Toast.LENGTH_LONG).show()
             return false
