@@ -14,7 +14,7 @@ node {
  } catch(err) {
   currentBuild.result = FAILURE
  } finally {
-  androidLint canComputeNew: false, defaultEncoding: '', healthy: '', pattern: '', unHealthy: ''
+  androidLint()
  }
 
  stage 'test'
